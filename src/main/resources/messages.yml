@@ -1,0 +1,26 @@
+# ChatChannels — player-facing messages (MiniMessage format)
+prefix: "<gray>[<gold>ChatChannels</gold>]</gray> "
+
+channel-switched: "<green>Cambiaste al canal <channel>."
+channel-not-found: "<red>Canal '<id>' no encontrado."
+channel-no-permission: "<red>No tienes permiso para usar ese canal."
+channel-list-header: "<gold>Canales disponibles:</gold>"
+channel-list-entry: "  <gray>- <channel> <dark_gray>(<prefix>)</dark_gray>"
+channel-cooldown: "<red>Espera <seconds>s antes de enviar otro mensaje."
+channel-muted: "<red>Estás silenciado en ese canal."
+
+mute-applied: "<green><target> silenciado en <channel> por <duration>."
+mute-permanent: "<green><target> silenciado en <channel> permanentemente."
+mute-not-found: "<red>Jugador '<target>' no encontrado."
+mute-usage: "<red>Uso: /mute <jugador> [canal] [duración: 10m, 1h, 2d]"
+
+spy-enabled: "<gold>Modo espía <green>activado</green>."
+spy-disabled: "<gold>Modo espía <red>desactivado</red>."
+spy-prefix: "<dark_gray>[SPY] "
+
+reload-success: "<green>ChatChannels recargado correctamente."
+
+filter-spam-duplicate: "<red>No envíes el mismo mensaje repetidamente."
+filter-spam-caps: "<red>Por favor escribe en minúsculas."
+filter-spam-flood: "<red>Estás enviando mensajes muy rápido."
+filter-word-block: "<red>Tu mensaje contiene palabras no permitidas."
