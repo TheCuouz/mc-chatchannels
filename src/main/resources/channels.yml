@@ -1,0 +1,56 @@
+# ChatChannels — channel configuration
+# range: -1 means global (all worlds, all players online)
+# range: N means only players within N blocks in the same world
+# quick-prefix: type this at the start of your message to send to that channel without switching
+
+channels:
+  global:
+    display-name: "<gold>Global"
+    quick-prefix: "!"
+    range: -1
+    permission: "chatchannels.use.global"
+    format: "<gray>[<gold>G</gold>]</gray> %luckperms_prefix%<player><reset>: <message>"
+    cooldown-seconds: 2
+  local:
+    display-name: "<green>Local"
+    quick-prefix: ""
+    range: 100
+    permission: "chatchannels.use.local"
+    format: "<gray>[<green>L</green>]</gray> <player>: <message>"
+    cooldown-seconds: 1
+  trade:
+    display-name: "<aqua>Trade"
+    quick-prefix: "#"
+    range: -1
+    permission: "chatchannels.use.trade"
+    format: "<gray>[<aqua>$</aqua>]</gray> <player>: <message>"
+    cooldown-seconds: 3
+  staff:
+    display-name: "<dark_red>Staff"
+    quick-prefix: "@"
+    range: -1
+    permission: "chatchannels.use.staff"
+    format: "<dark_red>[STAFF]</dark_red> <player>: <message>"
+    cooldown-seconds: 0
+
+default-channel: "local"
+
+filters:
+  spam:
+    enabled: true
+    # Block identical messages sent within this window
+    duplicate-window-seconds: 5
+    # Block if more than this % of characters are uppercase (min length below)
+    caps-threshold-pct: 70
+    caps-min-length: 10
+    # Block if player sends more than flood-max-messages in flood-window-seconds
+    flood-window-seconds: 5
+    flood-max-messages: 4
+  words:
+    # REPLACE: replace matched words with replacement string
+    # BLOCK: block the message entirely
+    mode: REPLACE
+    list:
+      - "badword1"
+      - "badword2"
+    replacement: "****"
