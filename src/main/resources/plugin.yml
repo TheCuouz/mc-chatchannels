@@ -1,0 +1,69 @@
+name: ChatChannels
+version: ${project.version}
+description: Configurable chat channels with permissions, quick prefixes, mute, spy mode and anti-spam filters.
+main: com.cristian.chatchannels.ChatChannelsPlugin
+author: Cristian
+website: https://www.spigotmc.org/resources/chatchannels/
+
+api-version: '1.21'
+load: POSTWORLD
+folia-supported: false
+
+softdepend:
+  - PlaceholderAPI
+  - LuckPerms
+
+commands:
+  channel:
+    description: Switch your active chat channel
+    usage: /channel <id>
+    aliases: [ch]
+    permission: chatchannels.use
+  channels:
+    description: List available chat channels
+    usage: /channels
+    permission: chatchannels.use
+  mute:
+    description: Mute a player from a channel
+    usage: /mute <player> [channel] [duration]
+    permission: chatchannels.mute
+  chatspy:
+    description: Toggle chat spy mode
+    usage: /chatspy
+    permission: chatchannels.spy
+  cc:
+    description: ChatChannels admin commands
+    usage: /cc <reload>
+    permission: chatchannels.admin
+
+permissions:
+  chatchannels.use:
+    description: Basic access to ChatChannels
+    default: true
+  chatchannels.use.global:
+    description: Access to the global channel
+    default: true
+  chatchannels.use.local:
+    description: Access to the local channel
+    default: true
+  chatchannels.use.trade:
+    description: Access to the trade channel
+    default: true
+  chatchannels.use.staff:
+    description: Access to the staff channel
+    default: op
+  chatchannels.spy:
+    description: Toggle spy mode to see all channels
+    default: op
+  chatchannels.mute:
+    description: Mute players from channels
+    default: op
+  chatchannels.bypass.cooldown:
+    description: Bypass channel cooldowns
+    default: op
+  chatchannels.bypass.filter:
+    description: Bypass spam and word filters
+    default: op
+  chatchannels.admin:
+    description: Admin commands (reload)
+    default: op
