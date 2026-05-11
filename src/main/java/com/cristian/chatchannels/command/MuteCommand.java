@@ -2,7 +2,8 @@ package com.cristian.chatchannels.command;
 
 import com.cristian.chatchannels.ChatChannelsPlugin;
 import com.cristian.chatchannels.util.DurationParser;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import com.ttsstudio.sdk.PluginIdentity;
+import com.ttsstudio.sdk.chat.ChatPrefix;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,33 +13,34 @@ import org.jetbrains.annotations.NotNull;
 
 public class MuteCommand implements CommandExecutor {
 
-    private static final MiniMessage MM = MiniMessage.miniMessage();
     private final ChatChannelsPlugin plugin;
+    private final PluginIdentity identity;
 
     public MuteCommand(ChatChannelsPlugin plugin) {
         this.plugin = plugin;
+        this.identity = PluginIdentity.of(plugin);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
         if (!sender.hasPermission("chatchannels.mute")) {
-            sender.sendMessage(MM.deserialize("<red>No tienes permiso."));
+            ChatPrefix.error(sender, identity, "No tienes permiso.");
             return true;
         }
         if (args.length < 1) {
-            sender.sendMessage(MM.deserialize(
+            ChatPrefix.send(sender, identity,
                 plugin.getMessagesConfig().getString("mute-usage",
-                    "<red>Uso: /mute <jugador> [canal] [duración: 10m, 1h, 2d]")));
+                    "<red>Uso: /mute <jugador> [canal] [duración: 10m, 1h, 2d]"));
             return true;
         }
 
         Player target = Bukkit.getPlayerExact(args[0]);
         if (target == null) {
-            sender.sendMessage(MM.deserialize(
+            ChatPrefix.send(sender, identity,
                 plugin.getMessagesConfig().getString("mute-not-found",
                     "<red>Jugador '<target>' no encontrado.")
-                    .replace("<target>", args[0])));
+                    .replace("<target>", args[0]));
             return true;
         }
 
@@ -49,7 +51,7 @@ public class MuteCommand implements CommandExecutor {
         if (durationStr != null) {
             long millis = DurationParser.parseMillis(durationStr);
             if (millis < 0) {
-                sender.sendMessage(MM.deserialize("<red>Duración inválida. Usa: 10m, 1h, 2d"));
+                ChatPrefix.error(sender, identity, "Duración inválida. Usa: 10m, 1h, 2d");
                 return true;
             }
             expiresAt = System.currentTimeMillis() + millis;
@@ -69,7 +71,7 @@ public class MuteCommand implements CommandExecutor {
             .replace("<target>", target.getName())
             .replace("<channel>", channelDisplay)
             .replace("<duration>", durationDisplay);
-        sender.sendMessage(MM.deserialize(msg));
+        ChatPrefix.send(sender, identity, msg);
         return true;
     }
 }

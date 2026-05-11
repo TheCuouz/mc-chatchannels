@@ -2,7 +2,8 @@ package com.cristian.chatchannels.command;
 
 import com.cristian.chatchannels.ChatChannelsPlugin;
 import com.cristian.chatchannels.channel.Channel;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import com.ttsstudio.sdk.PluginIdentity;
+import com.ttsstudio.sdk.chat.ChatPrefix;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,19 +12,20 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChannelsCommand implements CommandExecutor {
 
-    private static final MiniMessage MM = MiniMessage.miniMessage();
     private final ChatChannelsPlugin plugin;
+    private final PluginIdentity identity;
 
     public ChannelsCommand(ChatChannelsPlugin plugin) {
         this.plugin = plugin;
+        this.identity = PluginIdentity.of(plugin);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
-        sender.sendMessage(MM.deserialize(
+        ChatPrefix.send(sender, identity,
             plugin.getMessagesConfig().getString("channel-list-header",
-                "<gold>Canales disponibles:")));
+                "<gold>Canales disponibles:"));
 
         String entryTemplate = plugin.getMessagesConfig()
             .getString("channel-list-entry",
@@ -32,10 +34,10 @@ public class ChannelsCommand implements CommandExecutor {
         for (Channel ch : plugin.getChannelRegistry().getAll()) {
             if (sender instanceof Player player && !player.hasPermission(ch.permission())) continue;
             String prefix = ch.quickPrefix().isEmpty() ? "sin prefijo" : ch.quickPrefix();
-            sender.sendMessage(MM.deserialize(
+            ChatPrefix.send(sender, identity,
                 entryTemplate
                     .replace("<channel>", ch.displayName())
-                    .replace("<prefix>", prefix)));
+                    .replace("<prefix>", prefix));
         }
         return true;
     }

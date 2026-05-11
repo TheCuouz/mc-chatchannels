@@ -5,6 +5,8 @@ import com.cristian.chatchannels.filter.SpamFilter;
 import com.cristian.chatchannels.filter.WordFilter;
 import com.cristian.chatchannels.manager.MuteManager;
 import com.cristian.chatchannels.manager.PlayerChannelManager;
+import com.ttsstudio.sdk.PluginIdentity;
+import com.ttsstudio.sdk.console.ConsoleBanner;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +27,7 @@ public final class ChatChannelsPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        long startTime = System.currentTimeMillis();
         instance = this;
         saveDefaultConfig();
 
@@ -47,14 +50,18 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         // bStats — placeholder ID, replace with real one before publishing
         new org.bstats.bukkit.Metrics(this, 12345);
 
-        getSLF4JLogger().info("ChatChannels enabled.");
+        ConsoleBanner.enable(this, PluginIdentity.of(this))
+            .status(channelRegistry.getAll().size() + " channels")
+            .hook(getServer().getPluginManager().isPluginEnabled("PlaceholderAPI") ? "PAPI" : "no PAPI")
+            .ready(java.time.Duration.ofMillis(System.currentTimeMillis() - startTime))
+            .emit();
     }
 
     @Override
     public void onDisable() {
         if (playerChannelManager != null) playerChannelManager.save();
         if (muteManager != null) muteManager.save();
-        getSLF4JLogger().info("ChatChannels disabled.");
+        ConsoleBanner.disable(this, PluginIdentity.of(this)).emit();
     }
 
     public void reload() {
