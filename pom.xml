@@ -58,6 +58,13 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.ttsstudio</groupId>
+            <artifactId>tts-sdk</artifactId>
+            <version>0.1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -91,6 +98,10 @@
                                 <relocation>
                                     <pattern>org.bstats</pattern>
                                     <shadedPattern>com.cristian.chatchannels.libs.bstats</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.ttsstudio.sdk</pattern>
+                                    <shadedPattern>com.cristian.${project.artifactId}.libs.ttssdk</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

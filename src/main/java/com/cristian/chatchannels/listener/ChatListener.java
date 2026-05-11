@@ -2,6 +2,8 @@ package com.cristian.chatchannels.listener;
 
 import com.cristian.chatchannels.ChatChannelsPlugin;
 import com.cristian.chatchannels.channel.Channel;
+import com.ttsstudio.sdk.PluginIdentity;
+import com.ttsstudio.sdk.chat.ChatPrefix;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -21,9 +23,11 @@ public class ChatListener implements Listener {
     private static final PlainTextComponentSerializer PLAIN = PlainTextComponentSerializer.plainText();
 
     private final ChatChannelsPlugin plugin;
+    private final PluginIdentity identity;
 
     public ChatListener(ChatChannelsPlugin plugin) {
         this.plugin = plugin;
+        this.identity = PluginIdentity.of(plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -54,18 +58,18 @@ public class ChatListener implements Listener {
 
         // Permission check
         if (!player.hasPermission(targetChannel.permission())) {
-            player.sendMessage(MM.deserialize(
+            ChatPrefix.send(player, identity,
                 plugin.getMessagesConfig().getString("channel-no-permission",
-                    "<red>No tienes permiso para usar ese canal.")));
+                    "<red>No tienes permiso para usar ese canal."));
             event.setCancelled(true);
             return;
         }
 
         // Mute check
         if (plugin.getMuteManager().isMuted(uuid, targetChannel.id())) {
-            player.sendMessage(MM.deserialize(
+            ChatPrefix.send(player, identity,
                 plugin.getMessagesConfig().getString("channel-muted",
-                    "<red>Estás silenciado en ese canal.")));
+                    "<red>Estás silenciado en ese canal."));
             event.setCancelled(true);
             return;
         }
@@ -79,10 +83,10 @@ public class ChatListener implements Listener {
             long elapsed = now - lastTime;
             if (elapsed < cooldownMs) {
                 long remaining = (cooldownMs - elapsed + 999) / 1000;
-                player.sendMessage(MM.deserialize(
+                ChatPrefix.send(player, identity,
                     plugin.getMessagesConfig()
                         .getString("channel-cooldown", "<red>Espera <seconds>s.")
-                        .replace("<seconds>", String.valueOf(remaining))));
+                        .replace("<seconds>", String.valueOf(remaining)));
                 event.setCancelled(true);
                 return;
             }
@@ -100,8 +104,8 @@ public class ChatListener implements Listener {
                         case CAPS      -> "filter-spam-caps";
                         case FLOOD     -> "filter-spam-flood";
                     };
-                    player.sendMessage(MM.deserialize(
-                        plugin.getMessagesConfig().getString(msgKey, "<red>Mensaje bloqueado.")));
+                    ChatPrefix.send(player, identity,
+                        plugin.getMessagesConfig().getString(msgKey, "<red>Mensaje bloqueado."));
                     event.setCancelled(true);
                     return;
                 }
@@ -109,9 +113,9 @@ public class ChatListener implements Listener {
 
             var wordResult = plugin.getWordFilter().apply(messageContent);
             if (wordResult.blocked()) {
-                player.sendMessage(MM.deserialize(
+                ChatPrefix.send(player, identity,
                     plugin.getMessagesConfig().getString("filter-word-block",
-                        "<red>Tu mensaje contiene palabras no permitidas.")));
+                        "<red>Tu mensaje contiene palabras no permitidas."));
                 event.setCancelled(true);
                 return;
             }
