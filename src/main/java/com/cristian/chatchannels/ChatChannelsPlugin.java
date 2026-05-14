@@ -1,5 +1,7 @@
 package com.cristian.chatchannels;
 
+import com.cristian.chatchannels.cfg.ConfigManager;
+import com.cristian.chatchannels.cfg.MessageManager;
 import com.cristian.chatchannels.channel.ChannelRegistry;
 import com.cristian.chatchannels.filter.SpamFilter;
 import com.cristian.chatchannels.filter.WordFilter;
@@ -19,11 +21,12 @@ import java.util.List;
 public final class ChatChannelsPlugin extends JavaPlugin {
 
     private static ChatChannelsPlugin instance;
+    private ConfigManager configManager;
+    private MessageManager messageManager;
     private ChannelRegistry channelRegistry;
     private PlayerChannelManager playerChannelManager;
     private MuteManager muteManager;
     private HiddenChannelsManager hiddenChannelsManager;
-    private FileConfiguration messagesConfig;
     private @Nullable SpamFilter spamFilter;
     private WordFilter wordFilter;
 
@@ -31,9 +34,10 @@ public final class ChatChannelsPlugin extends JavaPlugin {
     public void onEnable() {
         long startTime = System.currentTimeMillis();
         instance = this;
-        saveDefaultConfig();
-
-        loadMessagesConfig();
+        configManager = new ConfigManager(this);
+        configManager.reload();
+        messageManager = new MessageManager(this, configManager);
+        messageManager.reload();
 
         channelRegistry = new ChannelRegistry(this);
         channelRegistry.load();
@@ -71,16 +75,10 @@ public final class ChatChannelsPlugin extends JavaPlugin {
     }
 
     public void reload() {
-        reloadConfig();
-        loadMessagesConfig();
+        configManager.reload();
+        messageManager.reload();
         channelRegistry.load();
         loadFilters();
-    }
-
-    private void loadMessagesConfig() {
-        File file = new File(getDataFolder(), "messages.yml");
-        if (!file.exists()) saveResource("messages.yml", false);
-        messagesConfig = YamlConfiguration.loadConfiguration(file);
     }
 
     private void loadFilters() {
@@ -147,12 +145,15 @@ public final class ChatChannelsPlugin extends JavaPlugin {
             ccCmd.setExecutor(new com.cristian.chatchannels.command.ChatChannelsRootCommand(this));
     }
 
-    public static ChatChannelsPlugin getInstance() { return instance; }
-    public ChannelRegistry getChannelRegistry() { return channelRegistry; }
-    public PlayerChannelManager getPlayerChannelManager() { return playerChannelManager; }
-    public MuteManager getMuteManager() { return muteManager; }
-    public HiddenChannelsManager getHiddenChannelsManager() { return hiddenChannelsManager; }
-    public FileConfiguration getMessagesConfig() { return messagesConfig; }
-    public @Nullable SpamFilter getSpamFilter() { return spamFilter; }
-    public WordFilter getWordFilter() { return wordFilter; }
+    public static ChatChannelsPlugin getInstance()           { return instance; }
+    public ConfigManager getConfigManager()                  { return configManager; }
+    public MessageManager getMessages()                      { return messageManager; }
+    /** Back-compat alias — call sites using .getString() compile unchanged. */
+    public MessageManager getMessagesConfig()                { return messageManager; }
+    public ChannelRegistry getChannelRegistry()              { return channelRegistry; }
+    public PlayerChannelManager getPlayerChannelManager()    { return playerChannelManager; }
+    public MuteManager getMuteManager()                      { return muteManager; }
+    public HiddenChannelsManager getHiddenChannelsManager()  { return hiddenChannelsManager; }
+    public @Nullable SpamFilter getSpamFilter()              { return spamFilter; }
+    public WordFilter getWordFilter()                        { return wordFilter; }
 }

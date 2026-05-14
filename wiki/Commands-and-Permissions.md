@@ -1,3 +1,5 @@
+> 🌐 **English** · [Español](es/Commands-and-Permissions.md)
+
 # Commands & Permissions
 
 All ChatChannels commands and their permissions are summarised below. Permission defaults follow `plugin.yml` and are the same as what a fresh install ships with.

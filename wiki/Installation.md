@@ -1,3 +1,5 @@
+> 🌐 **English** · [Español](es/Installation.md)
+
 # Installation
 
 ChatChannels installs in under a minute: drop the JAR, restart the server, done. The default `channels.yml` ships with four production-ready channels so you can verify the plugin works before customising anything.
