@@ -1,3 +1,5 @@
+> 🌐 **English** · [Español](es/PlaceholderAPI.md)
+
 # PlaceholderAPI Integration
 
 ChatChannels registers a `chatchannels` PAPI expansion when [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) is installed. The expansion exposes the current player's chat-channel state for use in scoreboards, TAB lists, chat formatters, and HUD plugins.

@@ -1,0 +1,34 @@
+# ChatChannels — english fallback
+# All strings are MiniMessage. The chat prefix is prepended by the SDK
+# automatically — no <prefix> needed here.
+
+channel-switched: "<green>You switched to channel <channel>."
+channel-not-found: "<red>Unknown channel: {channel}"
+channel-no-permission: "<red>You don't have permission to use that channel."
+channel-list-header: "<gold>Available channels:"
+channel-list-entry: "  <gray>- <channel> <dark_gray>(<prefix>)"
+channel-cooldown: "<red>Wait <seconds>s before sending another message."
+channel-muted: "<red>You are muted in that channel."
+
+mute-applied: "<green><target> muted in <channel> for <duration>."
+mute-permanent: "<green><target> permanently muted in <channel>."
+mute-not-found: "<red>Player '<target>' not found."
+mute-usage: "<red>Usage: /mute <player> [channel] [duration: 10m, 1h, 2d]"
+
+spy-enabled: "<gold>Spy mode <green>enabled</green>."
+spy-disabled: "<gold>Spy mode <red>disabled</red>."
+spy-prefix: "<dark_gray>[SPY] "
+
+reload-success: "<green>ChatChannels reloaded successfully."
+
+filter-spam-duplicate: "<red>Don't send the same message repeatedly."
+filter-spam-caps: "<red>Please write in lowercase."
+filter-spam-flood: "<red>You are sending messages too fast."
+filter-word-block: "<red>Your message contains forbidden words."
+
+channel-hidden: "<green>Channel {channel} hidden. You won't receive its messages."
+channel-shown: "<green>Channel {channel} visible again."
+channel-not-hidden: "<yellow>That channel was not hidden."
+channel-already-hidden: "<yellow>That channel was already hidden."
+hidden-list-empty: "<gray>You have no hidden channels."
+hidden-list: "<gray>Hidden channels: {channels}"

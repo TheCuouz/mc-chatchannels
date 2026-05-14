@@ -1,3 +1,10 @@
 # ChatChannels configuration
 # Main plugin settings are in channels.yml
+
+# Active language. ISO-639-1 two-letter code (lowercase).
+# Bundled out of the box: es (Spanish), en (English).
+# Missing keys fall back to en automatically. Operators can drop extra
+# lang/<code>.yml files in plugins/ChatChannels/lang/.
+language: es
+
 config-version: 1

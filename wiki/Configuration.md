@@ -1,3 +1,5 @@
+> 🌐 **English** · [Español](es/Configuration.md)
+
 # Configuration
 
 All ChatChannels configuration lives in two files:

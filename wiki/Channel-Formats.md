@@ -1,3 +1,5 @@
+> 🌐 **English** · [Español](es/Channel-Formats.md)
+
 # Channel Formats
 
 Every channel's `format:` string in `channels.yml` controls exactly how a message renders for the recipients. ChatChannels uses Adventure's [MiniMessage](https://docs.advntr.dev/minimessage/format.html) format — the modern, tag-based replacement for legacy `&`-codes — and runs each message through PlaceholderAPI (when present) before tag deserialisation.
