@@ -42,7 +42,8 @@ public class ChannelCommand implements CommandExecutor, TabCompleter {
         if (optChannel.isEmpty()) {
             ChatPrefix.send(player, identity,
                 plugin.getMessagesConfig().getString("channel-not-found",
-                    "<red>Canal '<id>' no encontrado.")
+                    "<red>Canal desconocido: {channel}</red>")
+                    .replace("{channel}", id)
                     .replace("<id>", id));
             return true;
         }

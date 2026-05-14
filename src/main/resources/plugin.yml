@@ -32,9 +32,10 @@ commands:
     usage: /chatspy
     permission: chatchannels.spy
   cc:
-    description: ChatChannels admin commands
-    usage: /cc <reload>
-    permission: chatchannels.admin
+    description: ChatChannels admin and player commands
+    usage: /cc <reload|hide #channel|show #channel|hidden>
+    aliases: [chatchannels]
+    permission: chatchannels.use
 
 permissions:
   chatchannels.use:
@@ -64,6 +65,9 @@ permissions:
   chatchannels.bypass.filter:
     description: Bypass spam and word filters
     default: op
+  chatchannels.hide:
+    description: Allow players to hide channels from their view
+    default: true
   chatchannels.admin:
     description: Admin commands (reload)
     default: op

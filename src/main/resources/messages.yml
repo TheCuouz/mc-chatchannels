@@ -2,7 +2,7 @@
 prefix: "<gray>[<gold>ChatChannels</gold>]</gray> "
 
 channel-switched: "<green>Cambiaste al canal <channel>."
-channel-not-found: "<red>Canal '<id>' no encontrado."
+channel-not-found: "<red>Canal desconocido: {channel}</red>"
 channel-no-permission: "<red>No tienes permiso para usar ese canal."
 channel-list-header: "<gold>Canales disponibles:</gold>"
 channel-list-entry: "  <gray>- <channel> <dark_gray>(<prefix>)</dark_gray>"
@@ -24,3 +24,12 @@ filter-spam-duplicate: "<red>No envíes el mismo mensaje repetidamente."
 filter-spam-caps: "<red>Por favor escribe en minúsculas."
 filter-spam-flood: "<red>Estás enviando mensajes muy rápido."
 filter-word-block: "<red>Tu mensaje contiene palabras no permitidas."
+
+# v1.1.0 — per-channel hide (self-mute receive-side). {channel} is replaced
+# with the channel's display-name, {channels} with a comma-joined list.
+channel-hidden: "<green>Canal {channel} oculto. No recibirás sus mensajes.</green>"
+channel-shown: "<green>Canal {channel} visible de nuevo.</green>"
+channel-not-hidden: "<yellow>Ese canal no estaba oculto.</yellow>"
+channel-already-hidden: "<yellow>Ese canal ya estaba oculto.</yellow>"
+hidden-list-empty: "<gray>No tienes canales ocultos.</gray>"
+hidden-list: "<gray>Canales ocultos: {channels}</gray>"
