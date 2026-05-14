@@ -131,6 +131,10 @@ public class ChatListener implements Listener {
         for (Player p : online) {
             if (!p.hasPermission(finalChannel.permission())) continue;
             if (plugin.getMuteManager().isMuted(p.getUniqueId(), finalChannel.id())) continue;
+            // Self-hide (receive-side): skip recipients who hid this channel.
+            // Sender always sees their own message, so they're added unconditionally below.
+            if (!p.getUniqueId().equals(player.getUniqueId())
+                    && plugin.getHiddenChannelsManager().isHidden(p.getUniqueId(), finalChannel.id())) continue;
             if (!finalChannel.isGlobal()) {
                 if (!p.getWorld().equals(player.getWorld())) continue;
                 double distSq = p.getLocation().distanceSquared(player.getLocation());

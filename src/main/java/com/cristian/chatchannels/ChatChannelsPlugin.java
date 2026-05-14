@@ -3,6 +3,7 @@ package com.cristian.chatchannels;
 import com.cristian.chatchannels.channel.ChannelRegistry;
 import com.cristian.chatchannels.filter.SpamFilter;
 import com.cristian.chatchannels.filter.WordFilter;
+import com.cristian.chatchannels.manager.HiddenChannelsManager;
 import com.cristian.chatchannels.manager.MuteManager;
 import com.cristian.chatchannels.manager.PlayerChannelManager;
 import com.ttsstudio.sdk.PluginIdentity;
@@ -21,6 +22,7 @@ public final class ChatChannelsPlugin extends JavaPlugin {
     private ChannelRegistry channelRegistry;
     private PlayerChannelManager playerChannelManager;
     private MuteManager muteManager;
+    private HiddenChannelsManager hiddenChannelsManager;
     private FileConfiguration messagesConfig;
     private @Nullable SpamFilter spamFilter;
     private WordFilter wordFilter;
@@ -42,6 +44,9 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         muteManager = new MuteManager(this);
         muteManager.load();
 
+        hiddenChannelsManager = new HiddenChannelsManager(new File(getDataFolder(), "hidden_channels.yml"));
+        hiddenChannelsManager.load();
+
         loadFilters();
 
         registerListeners();
@@ -61,6 +66,7 @@ public final class ChatChannelsPlugin extends JavaPlugin {
     public void onDisable() {
         if (playerChannelManager != null) playerChannelManager.save();
         if (muteManager != null) muteManager.save();
+        if (hiddenChannelsManager != null) hiddenChannelsManager.save();
         ConsoleBanner.disable(this, PluginIdentity.of(this)).emit();
     }
 
@@ -145,6 +151,7 @@ public final class ChatChannelsPlugin extends JavaPlugin {
     public ChannelRegistry getChannelRegistry() { return channelRegistry; }
     public PlayerChannelManager getPlayerChannelManager() { return playerChannelManager; }
     public MuteManager getMuteManager() { return muteManager; }
+    public HiddenChannelsManager getHiddenChannelsManager() { return hiddenChannelsManager; }
     public FileConfiguration getMessagesConfig() { return messagesConfig; }
     public @Nullable SpamFilter getSpamFilter() { return spamFilter; }
     public WordFilter getWordFilter() { return wordFilter; }
