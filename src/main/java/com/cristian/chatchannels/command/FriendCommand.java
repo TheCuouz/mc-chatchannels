@@ -79,6 +79,10 @@ public class FriendCommand implements CommandExecutor {
             ChatPrefix.send(player, identity,
                 plugin.getMessages().get("pm-offline", "player", targetName)); return;
         }
+        if (!fm.canAddFriend(offline.getUniqueId())) {
+            ChatPrefix.send(player, identity,
+                plugin.getMessages().get("friend-target-max", "player", targetName)); return;
+        }
         if (fm.areFriends(player.getUniqueId(), offline.getUniqueId())) {
             ChatPrefix.send(player, identity,
                 plugin.getMessages().get("friend-already", "player", targetName)); return;
@@ -103,7 +107,10 @@ public class FriendCommand implements CommandExecutor {
             ChatPrefix.send(player, identity,
                 plugin.getMessages().get("friend-no-request", "player", senderName)); return;
         }
-        fm.acceptRequest(offline.getUniqueId(), player.getUniqueId());
+        if (!fm.acceptRequest(offline.getUniqueId(), player.getUniqueId())) {
+            ChatPrefix.send(player, identity,
+                plugin.getMessages().get("friend-no-request", "player", senderName)); return;
+        }
         ChatPrefix.send(player, identity,
             plugin.getMessages().get("friend-accepted", "player", senderName));
         Player requester = Bukkit.getPlayer(offline.getUniqueId());
@@ -122,7 +129,10 @@ public class FriendCommand implements CommandExecutor {
             ChatPrefix.send(player, identity,
                 plugin.getMessages().get("friend-no-request", "player", senderName)); return;
         }
-        fm.denyRequest(offline.getUniqueId(), player.getUniqueId());
+        if (!fm.denyRequest(offline.getUniqueId(), player.getUniqueId())) {
+            ChatPrefix.send(player, identity,
+                plugin.getMessages().get("friend-no-request", "player", senderName)); return;
+        }
         ChatPrefix.send(player, identity,
             plugin.getMessages().get("friend-denied", "player", senderName));
     }
@@ -163,9 +173,9 @@ public class FriendCommand implements CommandExecutor {
             for (int i = start; i < end; i++) {
                 UUID fUuid = friendList.get(i);
                 Player online = Bukkit.getPlayer(fUuid);
+                String offlineName = online == null ? Bukkit.getOfflinePlayer(fUuid).getName() : null;
                 String fName = online != null ? online.getName()
-                    : (Bukkit.getOfflinePlayer(fUuid).getName() != null
-                       ? Bukkit.getOfflinePlayer(fUuid).getName() : fUuid.toString());
+                    : (offlineName != null ? offlineName : fUuid.toString());
                 if (online != null) {
                     Component nameComp = Component.text("  ● " + fName, NamedTextColor.GREEN)
                         .hoverEvent(HoverEvent.showText(Component.text("Click para enviar PM")));
