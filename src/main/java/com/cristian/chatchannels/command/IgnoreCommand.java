@@ -45,8 +45,8 @@ public class IgnoreCommand implements CommandExecutor {
             player.sendMessage(MM.deserialize(
                 plugin.getMessages().get("ignore-list-header", "count", String.valueOf(ignored.size()))));
             for (UUID uuid : ignored) {
-                var offline = Bukkit.getOfflinePlayer(uuid);
-                String name = offline.getName() != null ? offline.getName() : uuid.toString();
+                Player online = Bukkit.getPlayer(uuid);
+                String name = online != null ? online.getName() : uuid.toString();
                 player.sendMessage(MM.deserialize(
                     plugin.getMessages().get("ignore-list-entry", "player", name)));
             }

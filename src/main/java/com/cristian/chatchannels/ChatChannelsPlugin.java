@@ -73,12 +73,12 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         hiddenChannelsManager.load();
 
         chatLogWriter = new ChatLogWriter(getDataFolder(), configManager.loggingEnabled());
-        ignoreManager = new IgnoreManager(getDataFolder());
+        ignoreManager = new IgnoreManager(getDataFolder(), this);
         ignoreManager.load();
 
         friendManager = new FriendManager(getDataFolder().toPath(),
             configManager.friendsMaxFriends(),
-            configManager.friendsRequestTtlDays());
+            configManager.friendsRequestTtlDays(), this);
         friendManager.load();
 
         privateMessageManager = new PrivateMessageManager(this, ignoreManager, chatLogWriter);

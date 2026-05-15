@@ -145,7 +145,7 @@ public final class CrossServerMessenger implements PluginMessageListener {
         start += search.length();
         int end = json.indexOf('"', start);
         if (end < 0) return null;
-        return json.substring(start, end).replace("\\\"", "\"").replace("\\\\", "\\");
+        return json.substring(start, end).replace("\\\\", "\\").replace("\\\"", "\"");
     }
 
     private static String esc(String s) {

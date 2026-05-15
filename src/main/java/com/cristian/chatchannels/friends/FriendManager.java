@@ -2,6 +2,7 @@ package com.cristian.chatchannels.friends;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,11 +23,13 @@ public final class FriendManager {
     private final Path dataFolder;
     private final int maxFriends;
     private final int requestTtlDays;
+    private final Plugin plugin;
 
-    public FriendManager(Path dataFolder, int maxFriends, int requestTtlDays) {
+    public FriendManager(Path dataFolder, int maxFriends, int requestTtlDays, Plugin plugin) {
         this.dataFolder = dataFolder;
         this.maxFriends = maxFriends;
         this.requestTtlDays = requestTtlDays;
+        this.plugin = plugin;
     }
 
     public boolean areFriends(UUID a, UUID b) {
@@ -51,7 +54,7 @@ public final class FriendManager {
             pendingBySender.computeIfAbsent(senderUuid, k -> new ConcurrentHashMap<>());
         FriendRequest fresh = new FriendRequest(senderUuid, senderName, receiverUuid, System.currentTimeMillis());
         if (senderMap.putIfAbsent(receiverUuid, fresh) != null) return false;
-        saveRequests();
+        saveRequestsAsync();
         return true;
     }
 
@@ -84,7 +87,7 @@ public final class FriendManager {
         if (map.isEmpty()) pendingBySender.remove(senderUuid);
         friends.computeIfAbsent(senderUuid, k -> ConcurrentHashMap.newKeySet()).add(receiverUuid);
         friends.computeIfAbsent(receiverUuid, k -> ConcurrentHashMap.newKeySet()).add(senderUuid);
-        save();
+        saveAsync();
         return true;
     }
 
@@ -94,7 +97,7 @@ public final class FriendManager {
         if (map == null) return false;
         boolean removed = map.remove(receiverUuid) != null;
         if (map.isEmpty()) pendingBySender.remove(senderUuid);
-        if (removed) saveRequests();
+        if (removed) saveRequestsAsync();
         return removed;
     }
 
@@ -107,7 +110,7 @@ public final class FriendManager {
         boolean removedFromB = setB != null && setB.remove(a);
         if (removedFromB && setB.isEmpty()) friends.remove(b, setB);
         boolean wasPresent = removedFromA || removedFromB;
-        if (wasPresent) save();
+        if (wasPresent) saveAsync();
         return wasPresent;
     }
 
@@ -117,7 +120,31 @@ public final class FriendManager {
 
     public void setNotify(UUID uuid, boolean value) {
         notifyPrefs.put(uuid, value);
-        saveNotify();
+        saveNotifyAsync();
+    }
+
+    private void saveAsync() {
+        if (plugin != null) {
+            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, this::save);
+        } else {
+            save();
+        }
+    }
+
+    private void saveRequestsAsync() {
+        if (plugin != null) {
+            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, this::saveRequests);
+        } else {
+            saveRequests();
+        }
+    }
+
+    private void saveNotifyAsync() {
+        if (plugin != null) {
+            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, this::saveNotify);
+        } else {
+            saveNotify();
+        }
     }
 
     public void load() {

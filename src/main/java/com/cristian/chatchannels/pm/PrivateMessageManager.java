@@ -49,19 +49,22 @@ public final class PrivateMessageManager {
             // Try cross-server via DatabaseManager
             var db = plugin.getDatabaseManager();
             if (db != null) {
+                UUID senderUuid = sender.getUniqueId();
                 db.getPlayerSession(getOfflineUuid(targetName), optSession -> {
+                    Player s = plugin.getServer().getPlayer(senderUuid);
+                    if (s == null) return; // sender went offline
                     if (optSession.isPresent()) {
                         var messenger = plugin.getCrossServerMessenger();
                         if (messenger != null) {
-                            messenger.sendPM(sender, targetName, message, optSession.get());
-                            deliverSenderCopy(sender, targetName, message);
-                            plugin.getChatLogWriter().logPm(sender.getName(), targetName,
+                            messenger.sendPM(s, targetName, message, optSession.get());
+                            deliverSenderCopy(s, targetName, message);
+                            plugin.getChatLogWriter().logPm(s.getName(), targetName,
                                 optSession.get(), message);
-                            broadcastSpy(sender.getUniqueId(), null, targetName, message);
+                            broadcastSpy(s.getUniqueId(), null, targetName, message);
                         }
                     } else {
                         Bukkit.getScheduler().runTask(plugin, () ->
-                            ChatPrefix.send(sender, identity,
+                            ChatPrefix.send(s, identity,
                                 plugin.getMessages().get("pm-offline", "player", targetName)));
                     }
                 });
