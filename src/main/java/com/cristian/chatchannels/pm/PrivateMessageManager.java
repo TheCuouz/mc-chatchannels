@@ -18,7 +18,6 @@ public final class PrivateMessageManager {
     private final ChatChannelsPlugin plugin;
     private final PluginIdentity identity;
     private final IgnoreManager ignoreManager;
-    private final ChatLogWriter logWriter;
 
     /** uuid → uuid of the last player who messaged them (for /reply) */
     private final Map<UUID, UUID> lastMessaged = new ConcurrentHashMap<>();
@@ -29,7 +28,7 @@ public final class PrivateMessageManager {
         this.plugin = plugin;
         this.identity = PluginIdentity.of(plugin);
         this.ignoreManager = ignoreManager;
-        this.logWriter = logWriter;
+        // logWriter is resolved lazily via plugin.getChatLogWriter() so reload() stays in sync
     }
 
     /**
@@ -56,7 +55,7 @@ public final class PrivateMessageManager {
                         if (messenger != null) {
                             messenger.sendPM(sender, targetName, message, optSession.get());
                             deliverSenderCopy(sender, targetName, message);
-                            logWriter.logPm(sender.getName(), targetName,
+                            plugin.getChatLogWriter().logPm(sender.getName(), targetName,
                                 optSession.get(), message);
                             broadcastSpy(sender.getUniqueId(), null, targetName, message);
                         }
@@ -93,7 +92,7 @@ public final class PrivateMessageManager {
         deliverSenderCopy(sender, target.getName(), message);
         lastMessaged.put(target.getUniqueId(), sender.getUniqueId());
         lastMessaged.put(sender.getUniqueId(), target.getUniqueId());
-        logWriter.logPm(sender.getName(), target.getName(), serverName, message);
+        plugin.getChatLogWriter().logPm(sender.getName(), target.getName(), serverName, message);
         broadcastSpy(sender.getUniqueId(), target.getUniqueId(), target.getName(), message);
         return true;
     }
