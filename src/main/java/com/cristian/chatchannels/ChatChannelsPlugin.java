@@ -162,4 +162,5 @@ public final class ChatChannelsPlugin extends JavaPlugin {
     public com.cristian.chatchannels.crossserver.CrossServerMessenger getCrossServerMessenger() { return null; }
     public com.cristian.chatchannels.pm.PrivateMessageManager getPrivateMessageManager() { return null; }
     public com.cristian.chatchannels.pm.IgnoreManager getIgnoreManager() { return null; }
+    public com.cristian.chatchannels.friends.FriendManager getFriendManager() { return null; }
 }
