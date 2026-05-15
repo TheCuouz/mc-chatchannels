@@ -36,6 +36,24 @@ commands:
     usage: /cc <reload|hide #channel|show #channel|hidden>
     aliases: [chatchannels]
     permission: chatchannels.use
+  msg:
+    description: Send a private message
+    usage: /msg <player> <message>
+    aliases: [tell, whisper, w]
+    permission: chatchannels.pm.send
+  reply:
+    description: Reply to the last private message
+    usage: /reply <message>
+    aliases: [r]
+    permission: chatchannels.pm.send
+  ignore:
+    description: Ignore or un-ignore a player
+    usage: /ignore <player|list>
+    permission: chatchannels.ignore
+  friend:
+    description: Friends system
+    usage: /friend <add|accept|deny|remove|list|requests|notify>
+    permission: chatchannels.friends
 
 permissions:
   chatchannels.use:
@@ -71,3 +89,15 @@ permissions:
   chatchannels.admin:
     description: Admin commands (reload)
     default: op
+  chatchannels.pm.send:
+    description: Send private messages with /msg and /reply
+    default: true
+  chatchannels.pm.spy:
+    description: See all private messages (social spy)
+    default: op
+  chatchannels.ignore:
+    description: Use /ignore to block players
+    default: true
+  chatchannels.friends:
+    description: Use the friends system (/friend)
+    default: true
