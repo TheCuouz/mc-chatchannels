@@ -6,7 +6,7 @@
 
     <groupId>com.cristian</groupId>
     <artifactId>chatchannels</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <name>ChatChannels</name>
@@ -42,6 +42,20 @@
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>3.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.3.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -98,6 +112,14 @@
                                 <relocation>
                                     <pattern>org.bstats</pattern>
                                     <shadedPattern>com.cristian.chatchannels.libs.bstats</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.zaxxer.hikari</pattern>
+                                    <shadedPattern>com.cristian.chatchannels.libs.hikari</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.mysql</pattern>
+                                    <shadedPattern>com.cristian.chatchannels.libs.mysql</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.ttsstudio.sdk</pattern>
