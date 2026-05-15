@@ -3,8 +3,29 @@
 
 # Active language. ISO-639-1 two-letter code (lowercase).
 # Bundled out of the box: es (Spanish), en (English).
-# Missing keys fall back to en automatically. Operators can drop extra
-# lang/<code>.yml files in plugins/ChatChannels/lang/.
 language: es
 
-config-version: 1
+# Unique name for this server instance. Shown in /friend list when MySQL is active.
+server-name: "survival"
+
+# MySQL connection. Set enabled: true and fill credentials to unlock cross-server features.
+mysql:
+  enabled: false
+  host: "localhost"
+  port: 3306
+  database: "chatchannels"
+  username: "root"
+  password: ""
+  pool-size: 5
+
+# Chat logging. Writes a daily-rotated log to plugins/ChatChannels/logs/chat-YYYY-MM-DD.log
+logging:
+  enabled: true
+
+# Friends system settings.
+friends:
+  max-friends: 50
+  request-ttl-days: 7
+  notify-on-join: true
+
+config-version: 2
