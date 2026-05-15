@@ -156,6 +156,8 @@ public class ChatListener implements Listener {
         event.viewers().clear();
         event.viewers().addAll(viewers);
         event.renderer((source, sourceDisplayName, message, audience) -> formatted);
+
+        plugin.getChatLogWriter().logChannel(finalChannel.id(), player.getName(), finalMessage);
     }
 
     private Component buildMessage(Channel channel, Player player, String message, String spyPrefix) {

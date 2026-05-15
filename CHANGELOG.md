@@ -3,6 +3,24 @@
 All notable changes to ChatChannels are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.2.0] — 2026-05-15
+
+### Added
+- **Private messaging system** — `/msg` (aliases: `/tell`, `/whisper`, `/w`), `/reply` (alias: `/r`), and `/ignore` with persistent YAML ignore list
+- **Social spy extended** — `/chatspy` now intercepts private messages in addition to channel messages
+- **Chat log** — daily-rotating log at `plugins/ChatChannels/logs/chat-YYYY-MM-DD.log` covering both channel messages and PMs; toggled via `logging.enabled` in `config.yml`
+- **Friends system** — `/friend add/accept/deny/remove/list/requests/notify` with clickable Accept/Reject buttons in chat; friend online/offline notifications with per-player toggle
+- **Cross-server support (optional)** — configure MySQL in `config.yml` to enable: PM routing to players on other servers via BungeeCord plugin messaging channel `chatchannels:pm`, shared friend list and session tracking across instances
+- New permissions: `chatchannels.pm.send`, `chatchannels.pm.receive`, `chatchannels.pm.bypass-ignore`, `chatchannels.ignore`, `chatchannels.friends`
+- New config keys: `server-name`, `mysql.*`, `logging.enabled`, `friends.max-friends`, `friends.request-ttl-days`, `friends.notify-on-join`
+
+### Notes
+- MySQL is **optional**. Without it, all features work in single-server mode with YAML persistence.
+- All servers in a BungeeCord network must have the same jar installed for cross-server messaging to work.
+- The `bStats` plugin ID is still a placeholder (`12345`) — replace before publishing.
+
+---
+
 ## [1.1.0] — 2026-05-14
 
 ### Added

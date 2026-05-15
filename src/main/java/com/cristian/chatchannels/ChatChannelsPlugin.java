@@ -3,24 +3,34 @@ package com.cristian.chatchannels;
 import com.cristian.chatchannels.cfg.ConfigManager;
 import com.cristian.chatchannels.cfg.MessageManager;
 import com.cristian.chatchannels.channel.ChannelRegistry;
+import com.cristian.chatchannels.command.FriendCommand;
+import com.cristian.chatchannels.crossserver.CrossServerMessenger;
+import com.cristian.chatchannels.crossserver.DatabaseManager;
 import com.cristian.chatchannels.filter.SpamFilter;
 import com.cristian.chatchannels.filter.WordFilter;
+import com.cristian.chatchannels.friends.FriendManager;
 import com.cristian.chatchannels.manager.HiddenChannelsManager;
 import com.cristian.chatchannels.manager.MuteManager;
 import com.cristian.chatchannels.manager.PlayerChannelManager;
+import com.cristian.chatchannels.pm.ChatLogWriter;
+import com.cristian.chatchannels.pm.IgnoreManager;
+import com.cristian.chatchannels.pm.PrivateMessageManager;
 import com.ttsstudio.sdk.PluginIdentity;
 import com.ttsstudio.sdk.console.ConsoleBanner;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.jetbrains.annotations.Nullable;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.List;
 
 public final class ChatChannelsPlugin extends JavaPlugin {
 
     private static ChatChannelsPlugin instance;
+
+    // ── Existing managers ─────────────────────────────────────────────────────
     private ConfigManager configManager;
     private MessageManager messageManager;
     private ChannelRegistry channelRegistry;
@@ -30,10 +40,20 @@ public final class ChatChannelsPlugin extends JavaPlugin {
     private @Nullable SpamFilter spamFilter;
     private WordFilter wordFilter;
 
+    // ── New managers ──────────────────────────────────────────────────────────
+    private ChatLogWriter chatLogWriter;
+    private IgnoreManager ignoreManager;
+    private PrivateMessageManager privateMessageManager;
+    private FriendManager friendManager;
+    private @Nullable DatabaseManager databaseManager;
+    private @Nullable CrossServerMessenger crossServerMessenger;
+    private @Nullable FriendCommand friendCommand;
+
     @Override
     public void onEnable() {
         long startTime = System.currentTimeMillis();
         instance = this;
+
         configManager = new ConfigManager(this);
         configManager.reload();
         messageManager = new MessageManager(this, configManager);
@@ -48,20 +68,49 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         muteManager = new MuteManager(this);
         muteManager.load();
 
-        hiddenChannelsManager = new HiddenChannelsManager(new File(getDataFolder(), "hidden_channels.yml"));
+        hiddenChannelsManager = new HiddenChannelsManager(
+            new File(getDataFolder(), "hidden_channels.yml"));
         hiddenChannelsManager.load();
 
-        loadFilters();
+        chatLogWriter = new ChatLogWriter(getDataFolder(), configManager.loggingEnabled());
+        ignoreManager = new IgnoreManager(getDataFolder());
+        ignoreManager.load();
 
+        friendManager = new FriendManager(getDataFolder().toPath(),
+            configManager.friendsMaxFriends(),
+            configManager.friendsRequestTtlDays());
+        friendManager.load();
+
+        privateMessageManager = new PrivateMessageManager(this, ignoreManager, chatLogWriter);
+
+        if (configManager.mysqlEnabled()) {
+            try {
+                databaseManager = new DatabaseManager(this,
+                    configManager.mysqlHost(), configManager.mysqlPort(),
+                    configManager.mysqlDatabase(), configManager.mysqlUsername(),
+                    configManager.mysqlPassword(), configManager.mysqlPoolSize());
+                crossServerMessenger = new CrossServerMessenger(this);
+                crossServerMessenger.register();
+                getSLF4JLogger().info("Cross-server mode enabled.");
+            } catch (SQLException e) {
+                getSLF4JLogger().error("MySQL connection failed — running in single-server mode.", e);
+                databaseManager = null;
+                crossServerMessenger = null;
+            }
+        } else {
+            getSLF4JLogger().info("Cross-server disabled — configure MySQL in config.yml to enable.");
+        }
+
+        loadFilters();
         registerListeners();
         registerCommands();
 
-        // bStats — placeholder ID, replace with real one before publishing
         new org.bstats.bukkit.Metrics(this, 12345);
 
         ConsoleBanner.enable(this, PluginIdentity.of(this))
             .status(channelRegistry.getAll().size() + " channels")
             .hook(getServer().getPluginManager().isPluginEnabled("PlaceholderAPI") ? "PAPI" : "no PAPI")
+            .hook(databaseManager != null ? "MySQL" : "single-server")
             .ready(java.time.Duration.ofMillis(System.currentTimeMillis() - startTime))
             .emit();
     }
@@ -71,6 +120,11 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         if (playerChannelManager != null) playerChannelManager.save();
         if (muteManager != null) muteManager.save();
         if (hiddenChannelsManager != null) hiddenChannelsManager.save();
+        if (ignoreManager != null) ignoreManager.save();
+        if (friendManager != null) friendManager.save();
+        if (chatLogWriter != null) chatLogWriter.close();
+        if (crossServerMessenger != null) crossServerMessenger.unregister();
+        if (databaseManager != null) databaseManager.close();
         ConsoleBanner.disable(this, PluginIdentity.of(this)).emit();
     }
 
@@ -79,6 +133,8 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         messageManager.reload();
         channelRegistry.load();
         loadFilters();
+        if (chatLogWriter != null) chatLogWriter.close();
+        chatLogWriter = new ChatLogWriter(getDataFolder(), configManager.loggingEnabled());
     }
 
     private void loadFilters() {
@@ -102,11 +158,8 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         String modeStr = cfg.getString("filters.words.mode", "REPLACE");
         String replacement = cfg.getString("filters.words.replacement", "****");
         WordFilter.Mode mode;
-        try {
-            mode = WordFilter.Mode.valueOf(modeStr.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            mode = WordFilter.Mode.REPLACE;
-        }
+        try { mode = WordFilter.Mode.valueOf(modeStr.toUpperCase()); }
+        catch (IllegalArgumentException e) { mode = WordFilter.Mode.REPLACE; }
         wordFilter = new WordFilter(mode, wordsList, replacement);
     }
 
@@ -114,53 +167,48 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         var pm = getServer().getPluginManager();
         pm.registerEvents(new com.cristian.chatchannels.listener.ChatListener(this), this);
         pm.registerEvents(new com.cristian.chatchannels.listener.PlayerListener(this), this);
-
-        if (pm.isPluginEnabled("PlaceholderAPI")) {
+        if (pm.isPluginEnabled("PlaceholderAPI"))
             new com.cristian.chatchannels.integration.PapiHook(this).register();
-            getSLF4JLogger().info("PlaceholderAPI hook registered.");
-        }
     }
 
     private void registerCommands() {
         var channelCmd = getCommand("channel");
         if (channelCmd != null) {
             var handler = new com.cristian.chatchannels.command.ChannelCommand(this);
-            channelCmd.setExecutor(handler);
-            channelCmd.setTabCompleter(handler);
+            channelCmd.setExecutor(handler); channelCmd.setTabCompleter(handler);
         }
-        var channelsCmd = getCommand("channels");
-        if (channelsCmd != null)
-            channelsCmd.setExecutor(new com.cristian.chatchannels.command.ChannelsCommand(this));
+        setExecutor("channels", new com.cristian.chatchannels.command.ChannelsCommand(this));
+        setExecutor("mute",     new com.cristian.chatchannels.command.MuteCommand(this));
+        setExecutor("chatspy",  new com.cristian.chatchannels.command.ChatSpyCommand(this));
+        setExecutor("cc",       new com.cristian.chatchannels.command.ChatChannelsRootCommand(this));
 
-        var muteCmd = getCommand("mute");
-        if (muteCmd != null)
-            muteCmd.setExecutor(new com.cristian.chatchannels.command.MuteCommand(this));
-
-        var chatspyCmd = getCommand("chatspy");
-        if (chatspyCmd != null)
-            chatspyCmd.setExecutor(new com.cristian.chatchannels.command.ChatSpyCommand(this));
-
-        var ccCmd = getCommand("cc");
-        if (ccCmd != null)
-            ccCmd.setExecutor(new com.cristian.chatchannels.command.ChatChannelsRootCommand(this));
+        setExecutor("msg",    new com.cristian.chatchannels.command.MsgCommand(this));
+        setExecutor("reply",  new com.cristian.chatchannels.command.ReplyCommand(this));
+        setExecutor("ignore", new com.cristian.chatchannels.command.IgnoreCommand(this));
+        friendCommand = new FriendCommand(this);
+        setExecutor("friend", friendCommand);
     }
 
-    public static ChatChannelsPlugin getInstance()           { return instance; }
-    public ConfigManager getConfigManager()                  { return configManager; }
-    public MessageManager getMessages()                      { return messageManager; }
-    /** Back-compat alias — call sites using .getString() compile unchanged. */
-    public MessageManager getMessagesConfig()                { return messageManager; }
-    public ChannelRegistry getChannelRegistry()              { return channelRegistry; }
-    public PlayerChannelManager getPlayerChannelManager()    { return playerChannelManager; }
-    public MuteManager getMuteManager()                      { return muteManager; }
-    public HiddenChannelsManager getHiddenChannelsManager()  { return hiddenChannelsManager; }
-    public @Nullable SpamFilter getSpamFilter()              { return spamFilter; }
-    public WordFilter getWordFilter()                        { return wordFilter; }
+    private void setExecutor(String name, org.bukkit.command.CommandExecutor exec) {
+        var cmd = getCommand(name);
+        if (cmd != null) cmd.setExecutor(exec);
+    }
 
-    // --- Stubs: replaced in Task 14 with real implementations ---
-    public com.cristian.chatchannels.crossserver.DatabaseManager getDatabaseManager() { return null; }
-    public com.cristian.chatchannels.crossserver.CrossServerMessenger getCrossServerMessenger() { return null; }
-    public com.cristian.chatchannels.pm.PrivateMessageManager getPrivateMessageManager() { return null; }
-    public com.cristian.chatchannels.pm.IgnoreManager getIgnoreManager() { return null; }
-    public com.cristian.chatchannels.friends.FriendManager getFriendManager() { return null; }
+    public static ChatChannelsPlugin getInstance()                { return instance; }
+    public ConfigManager getConfigManager()                       { return configManager; }
+    public MessageManager getMessages()                           { return messageManager; }
+    public MessageManager getMessagesConfig()                     { return messageManager; }
+    public ChannelRegistry getChannelRegistry()                   { return channelRegistry; }
+    public PlayerChannelManager getPlayerChannelManager()         { return playerChannelManager; }
+    public MuteManager getMuteManager()                           { return muteManager; }
+    public HiddenChannelsManager getHiddenChannelsManager()       { return hiddenChannelsManager; }
+    public @Nullable SpamFilter getSpamFilter()                   { return spamFilter; }
+    public WordFilter getWordFilter()                             { return wordFilter; }
+    public ChatLogWriter getChatLogWriter()                        { return chatLogWriter; }
+    public IgnoreManager getIgnoreManager()                       { return ignoreManager; }
+    public PrivateMessageManager getPrivateMessageManager()       { return privateMessageManager; }
+    public FriendManager getFriendManager()                       { return friendManager; }
+    public @Nullable DatabaseManager getDatabaseManager()         { return databaseManager; }
+    public @Nullable CrossServerMessenger getCrossServerMessenger() { return crossServerMessenger; }
+    public @Nullable FriendCommand getFriendCommand()             { return friendCommand; }
 }
