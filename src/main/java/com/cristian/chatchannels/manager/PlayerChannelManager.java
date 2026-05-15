@@ -72,6 +72,12 @@ public class PlayerChannelManager {
         spying.compute(uuid, (k, v) -> v == null ? true : !v);
     }
 
+    public java.util.Set<UUID> getSpyPlayers() {
+        java.util.Set<UUID> result = new java.util.HashSet<>();
+        spying.forEach((uuid, isSpy) -> { if (isSpy) result.add(uuid); });
+        return result;
+    }
+
     public void remove(UUID uuid) {
         lastMessageTime.remove(uuid);
         spying.remove(uuid);
