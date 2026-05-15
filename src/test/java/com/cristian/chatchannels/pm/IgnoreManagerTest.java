@@ -13,7 +13,7 @@ class IgnoreManagerTest {
     @TempDir Path tempDir;
 
     private IgnoreManager manager() {
-        return new IgnoreManager(tempDir.toFile());
+        return new IgnoreManager(tempDir.toFile(), null);
     }
 
     @Test
@@ -65,11 +65,11 @@ class IgnoreManagerTest {
     @Test
     void persistsAcrossReload() {
         UUID a = UUID.randomUUID(), b = UUID.randomUUID();
-        IgnoreManager m = new IgnoreManager(tempDir.toFile());
+        IgnoreManager m = new IgnoreManager(tempDir.toFile(), null);
         m.addIgnore(a, b);
         m.save();
 
-        IgnoreManager m2 = new IgnoreManager(tempDir.toFile());
+        IgnoreManager m2 = new IgnoreManager(tempDir.toFile(), null);
         m2.load();
         assertTrue(m2.isIgnoring(a, b));
     }

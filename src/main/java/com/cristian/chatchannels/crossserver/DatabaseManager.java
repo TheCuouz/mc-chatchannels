@@ -60,7 +60,7 @@ public final class DatabaseManager {
                   PRIMARY KEY (ignorer_uuid, ignored_uuid)
                 )""");
         }
-        cleanStaleSessions();
+        runAsync(this::cleanStaleSessions);
     }
 
     // ── Sessions ──────────────────────────────────────────────────────────────

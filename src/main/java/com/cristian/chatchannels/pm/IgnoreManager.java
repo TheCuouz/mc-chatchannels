@@ -2,6 +2,7 @@ package com.cristian.chatchannels.pm;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +17,11 @@ public final class IgnoreManager {
 
     private final Map<UUID, Set<UUID>> ignoreMap = new ConcurrentHashMap<>();
     private final File yamlFile;
+    private final Plugin plugin;
 
-    public IgnoreManager(File dataFolder) {
+    public IgnoreManager(File dataFolder, Plugin plugin) {
         this.yamlFile = new File(dataFolder, "ignores.yml");
+        this.plugin = plugin;
     }
 
     public boolean isIgnoring(UUID ignorer, UUID ignored) {
@@ -30,7 +33,7 @@ public final class IgnoreManager {
     public boolean addIgnore(UUID ignorer, UUID ignored) {
         Set<UUID> set = ignoreMap.computeIfAbsent(ignorer, k -> ConcurrentHashMap.newKeySet());
         boolean added = set.add(ignored);
-        if (added) save();
+        if (added) saveAsync();
         return added;
     }
 
@@ -41,7 +44,7 @@ public final class IgnoreManager {
         boolean removed = set.remove(ignored);
         if (removed) {
             if (set.isEmpty()) ignoreMap.remove(ignorer);
-            save();
+            saveAsync();
         }
         return removed;
     }
@@ -66,6 +69,14 @@ public final class IgnoreManager {
                 }
                 if (!set.isEmpty()) ignoreMap.put(ignorer, set);
             } catch (IllegalArgumentException ignored) {}
+        }
+    }
+
+    private void saveAsync() {
+        if (plugin != null) {
+            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, this::save);
+        } else {
+            save();
         }
     }
 

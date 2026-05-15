@@ -13,7 +13,7 @@ class FriendManagerTest {
     @TempDir Path tempDir;
 
     private FriendManager manager() {
-        return new FriendManager(tempDir, 50, 7);
+        return new FriendManager(tempDir, 50, 7, null);
     }
 
     @Test
@@ -57,7 +57,7 @@ class FriendManagerTest {
 
     @Test
     void maxFriendsEnforced() {
-        FriendManager m = new FriendManager(tempDir, 2, 7);
+        FriendManager m = new FriendManager(tempDir, 2, 7, null);
         UUID a = UUID.randomUUID();
         UUID b = UUID.randomUUID(), c = UUID.randomUUID();
         m.addRequest(a, "A", b);
@@ -87,12 +87,12 @@ class FriendManagerTest {
     @Test
     void persistsAcrossReload() {
         UUID a = UUID.randomUUID(), b = UUID.randomUUID();
-        FriendManager m = new FriendManager(tempDir, 50, 7);
+        FriendManager m = new FriendManager(tempDir, 50, 7, null);
         m.addRequest(a, "A", b);
         m.acceptRequest(a, b);
         m.save();
 
-        FriendManager m2 = new FriendManager(tempDir, 50, 7);
+        FriendManager m2 = new FriendManager(tempDir, 50, 7, null);
         m2.load();
         assertTrue(m2.areFriends(a, b));
         assertTrue(m2.areFriends(b, a));
@@ -101,7 +101,7 @@ class FriendManagerTest {
     @Test
     void expiredRequestCannotBeAccepted() {
         // ttlDays = -1: ttlMs = -86_400_000, so currentTimeMillis - sentAt > ttlMs is always true
-        FriendManager m = new FriendManager(tempDir, 50, -1);
+        FriendManager m = new FriendManager(tempDir, 50, -1, null);
         UUID a = UUID.randomUUID(), b = UUID.randomUUID();
         m.addRequest(a, "A", b);
         assertFalse(m.acceptRequest(a, b));
