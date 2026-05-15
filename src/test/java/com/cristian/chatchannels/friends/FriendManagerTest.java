@@ -13,7 +13,7 @@ class FriendManagerTest {
     @TempDir Path tempDir;
 
     private FriendManager manager() {
-        return new FriendManager(tempDir.toFile(), 50, 7);
+        return new FriendManager(tempDir, 50, 7);
     }
 
     @Test
@@ -26,11 +26,11 @@ class FriendManagerTest {
     void addAndAcceptRequest() {
         FriendManager m = manager();
         UUID a = UUID.randomUUID(), b = UUID.randomUUID();
-        m.addRequest(new FriendRequest(a, "A", b, System.currentTimeMillis()));
+        assertTrue(m.addRequest(a, "A", b));
         assertTrue(m.hasPendingRequest(a, b));
-        m.acceptRequest(a, b);
+        assertTrue(m.acceptRequest(a, b));
         assertTrue(m.areFriends(a, b));
-        assertTrue(m.areFriends(b, a)); // symmetric
+        assertTrue(m.areFriends(b, a));
         assertFalse(m.hasPendingRequest(a, b));
     }
 
@@ -38,8 +38,8 @@ class FriendManagerTest {
     void denyRequestClearsPending() {
         FriendManager m = manager();
         UUID a = UUID.randomUUID(), b = UUID.randomUUID();
-        m.addRequest(new FriendRequest(a, "A", b, System.currentTimeMillis()));
-        m.denyRequest(a, b);
+        m.addRequest(a, "A", b);
+        assertTrue(m.denyRequest(a, b));
         assertFalse(m.hasPendingRequest(a, b));
         assertFalse(m.areFriends(a, b));
     }
@@ -48,23 +48,22 @@ class FriendManagerTest {
     void removeFriendship() {
         FriendManager m = manager();
         UUID a = UUID.randomUUID(), b = UUID.randomUUID();
-        m.addRequest(new FriendRequest(a, "A", b, System.currentTimeMillis()));
+        m.addRequest(a, "A", b);
         m.acceptRequest(a, b);
-        m.removeFriendship(a, b);
+        assertTrue(m.removeFriendship(a, b));
         assertFalse(m.areFriends(a, b));
         assertFalse(m.areFriends(b, a));
     }
 
     @Test
     void maxFriendsEnforced() {
-        FriendManager m = new FriendManager(tempDir.toFile(), 2, 7);
+        FriendManager m = new FriendManager(tempDir, 2, 7);
         UUID a = UUID.randomUUID();
         UUID b = UUID.randomUUID(), c = UUID.randomUUID();
-        m.addRequest(new FriendRequest(a, "A", b, System.currentTimeMillis()));
+        m.addRequest(a, "A", b);
         m.acceptRequest(a, b);
-        m.addRequest(new FriendRequest(a, "A", c, System.currentTimeMillis()));
+        m.addRequest(a, "A", c);
         m.acceptRequest(a, c);
-        // Now at max
         assertFalse(m.canAddFriend(a));
     }
 
@@ -72,28 +71,28 @@ class FriendManagerTest {
     void requestToAlreadyFriendReturnsFalse() {
         FriendManager m = manager();
         UUID a = UUID.randomUUID(), b = UUID.randomUUID();
-        m.addRequest(new FriendRequest(a, "A", b, System.currentTimeMillis()));
+        m.addRequest(a, "A", b);
         m.acceptRequest(a, b);
-        assertFalse(m.addRequest(new FriendRequest(a, "A", b, System.currentTimeMillis())));
+        assertFalse(m.addRequest(a, "A", b));
     }
 
     @Test
     void duplicateRequestReturnsFalse() {
         FriendManager m = manager();
         UUID a = UUID.randomUUID(), b = UUID.randomUUID();
-        assertTrue(m.addRequest(new FriendRequest(a, "A", b, System.currentTimeMillis())));
-        assertFalse(m.addRequest(new FriendRequest(a, "A", b, System.currentTimeMillis())));
+        assertTrue(m.addRequest(a, "A", b));
+        assertFalse(m.addRequest(a, "A", b));
     }
 
     @Test
     void persistsAcrossReload() {
         UUID a = UUID.randomUUID(), b = UUID.randomUUID();
-        FriendManager m = new FriendManager(tempDir.toFile(), 50, 7);
-        m.addRequest(new FriendRequest(a, "A", b, System.currentTimeMillis()));
+        FriendManager m = new FriendManager(tempDir, 50, 7);
+        m.addRequest(a, "A", b);
         m.acceptRequest(a, b);
         m.save();
 
-        FriendManager m2 = new FriendManager(tempDir.toFile(), 50, 7);
+        FriendManager m2 = new FriendManager(tempDir, 50, 7);
         m2.load();
         assertTrue(m2.areFriends(a, b));
     }
