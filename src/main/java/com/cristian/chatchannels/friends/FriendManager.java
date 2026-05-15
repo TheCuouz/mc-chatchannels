@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -18,11 +19,11 @@ public final class FriendManager {
     /** senderUuid → Map<receiverUuid, FriendRequest> */
     private final Map<UUID, Map<UUID, FriendRequest>> pendingBySender = new ConcurrentHashMap<>();
     private final Map<UUID, Boolean> notifyPrefs = new ConcurrentHashMap<>();
-    private final File dataFolder;
+    private final Path dataFolder;
     private final int maxFriends;
     private final int requestTtlDays;
 
-    public FriendManager(File dataFolder, int maxFriends, int requestTtlDays) {
+    public FriendManager(Path dataFolder, int maxFriends, int requestTtlDays) {
         this.dataFolder = dataFolder;
         this.maxFriends = maxFriends;
         this.requestTtlDays = requestTtlDays;
@@ -44,19 +45,21 @@ public final class FriendManager {
     }
 
     /** @return false if already friends or duplicate pending request */
-    public boolean addRequest(FriendRequest request) {
-        if (areFriends(request.senderUuid(), request.receiverUuid())) return false;
+    public boolean addRequest(UUID senderUuid, String senderName, UUID receiverUuid) {
+        if (areFriends(senderUuid, receiverUuid)) return false;
         Map<UUID, FriendRequest> senderMap =
-            pendingBySender.computeIfAbsent(request.senderUuid(), k -> new ConcurrentHashMap<>());
-        if (senderMap.containsKey(request.receiverUuid())) return false;
-        senderMap.put(request.receiverUuid(), request);
+            pendingBySender.computeIfAbsent(senderUuid, k -> new ConcurrentHashMap<>());
+        if (senderMap.containsKey(receiverUuid)) return false;
+        senderMap.put(receiverUuid, new FriendRequest(senderUuid, senderName, receiverUuid, System.currentTimeMillis()));
         saveRequests();
         return true;
     }
 
     public boolean hasPendingRequest(UUID senderUuid, UUID receiverUuid) {
         Map<UUID, FriendRequest> map = pendingBySender.get(senderUuid);
-        return map != null && map.containsKey(receiverUuid);
+        if (map == null) return false;
+        FriendRequest req = map.get(receiverUuid);
+        return req != null && !req.isExpired(requestTtlDays);
     }
 
     /** Returns all requests where receiverUuid is the receiver (for /friend requests) */
@@ -71,35 +74,41 @@ public final class FriendManager {
         return result;
     }
 
-    public void acceptRequest(UUID senderUuid, UUID receiverUuid) {
+    /** @return false if no pending request existed */
+    public boolean acceptRequest(UUID senderUuid, UUID receiverUuid) {
         Map<UUID, FriendRequest> map = pendingBySender.get(senderUuid);
-        if (map == null || !map.containsKey(receiverUuid)) return;
+        if (map == null || !map.containsKey(receiverUuid)) return false;
         map.remove(receiverUuid);
         if (map.isEmpty()) pendingBySender.remove(senderUuid);
-        // Add symmetric friendship
         friends.computeIfAbsent(senderUuid, k -> ConcurrentHashMap.newKeySet()).add(receiverUuid);
         friends.computeIfAbsent(receiverUuid, k -> ConcurrentHashMap.newKeySet()).add(senderUuid);
         save();
+        return true;
     }
 
-    public void denyRequest(UUID senderUuid, UUID receiverUuid) {
+    /** @return false if no pending request existed */
+    public boolean denyRequest(UUID senderUuid, UUID receiverUuid) {
         Map<UUID, FriendRequest> map = pendingBySender.get(senderUuid);
-        if (map == null) return;
-        map.remove(receiverUuid);
+        if (map == null) return false;
+        boolean removed = map.remove(receiverUuid) != null;
         if (map.isEmpty()) pendingBySender.remove(senderUuid);
-        saveRequests();
+        if (removed) saveRequests();
+        return removed;
     }
 
-    public void removeFriendship(UUID a, UUID b) {
+    /** @return false if they were not friends */
+    public boolean removeFriendship(UUID a, UUID b) {
+        boolean wasPresent = areFriends(a, b);
         Set<UUID> setA = friends.get(a);
         if (setA != null) { setA.remove(b); if (setA.isEmpty()) friends.remove(a); }
         Set<UUID> setB = friends.get(b);
         if (setB != null) { setB.remove(a); if (setB.isEmpty()) friends.remove(b); }
-        save();
+        if (wasPresent) save();
+        return wasPresent;
     }
 
-    public boolean getNotify(UUID uuid, boolean defaultValue) {
-        return notifyPrefs.getOrDefault(uuid, defaultValue);
+    public boolean getNotify(UUID uuid) {
+        return notifyPrefs.getOrDefault(uuid, true);
     }
 
     public void setNotify(UUID uuid, boolean value) {
@@ -120,7 +129,7 @@ public final class FriendManager {
     }
 
     private void loadFriends() {
-        File f = new File(dataFolder, "friends.yml");
+        File f = dataFolder.resolve("friends.yml").toFile();
         if (!f.exists()) return;
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(f);
         ConfigurationSection sec = cfg.getConfigurationSection("friends");
@@ -145,11 +154,11 @@ public final class FriendManager {
             Collections.sort(list);
             cfg.set("friends." + e.getKey(), list);
         }
-        saveFile(new File(dataFolder, "friends.yml"), cfg);
+        saveFile(dataFolder.resolve("friends.yml").toFile(), cfg);
     }
 
     private void loadRequests() {
-        File f = new File(dataFolder, "friend_requests.yml");
+        File f = dataFolder.resolve("friend_requests.yml").toFile();
         if (!f.exists()) return;
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(f);
         ConfigurationSection sec = cfg.getConfigurationSection("requests");
@@ -185,11 +194,11 @@ public final class FriendManager {
                 cfg.set(path + ".sent_at", re.getValue().sentAt());
             }
         }
-        saveFile(new File(dataFolder, "friend_requests.yml"), cfg);
+        saveFile(dataFolder.resolve("friend_requests.yml").toFile(), cfg);
     }
 
     private void loadNotify() {
-        File f = new File(dataFolder, "friend_notify.yml");
+        File f = dataFolder.resolve("friend_notify.yml").toFile();
         if (!f.exists()) return;
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(f);
         ConfigurationSection sec = cfg.getConfigurationSection("notify");
@@ -203,7 +212,7 @@ public final class FriendManager {
     private void saveNotify() {
         YamlConfiguration cfg = new YamlConfiguration();
         notifyPrefs.forEach((uuid, val) -> cfg.set("notify." + uuid, val));
-        saveFile(new File(dataFolder, "friend_notify.yml"), cfg);
+        saveFile(dataFolder.resolve("friend_notify.yml").toFile(), cfg);
     }
 
     private void saveFile(File file, YamlConfiguration cfg) {
