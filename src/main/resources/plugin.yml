@@ -92,6 +92,12 @@ permissions:
   chatchannels.pm.send:
     description: Send private messages with /msg and /reply
     default: true
+  chatchannels.pm.receive:
+    description: Receive private messages
+    default: true
+  chatchannels.pm.bypass-ignore:
+    description: Send PMs even if the recipient has you ignored
+    default: op
   chatchannels.pm.spy:
     description: See all private messages (social spy)
     default: op
