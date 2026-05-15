@@ -95,5 +95,16 @@ class FriendManagerTest {
         FriendManager m2 = new FriendManager(tempDir, 50, 7);
         m2.load();
         assertTrue(m2.areFriends(a, b));
+        assertTrue(m2.areFriends(b, a));
+    }
+
+    @Test
+    void expiredRequestCannotBeAccepted() {
+        // ttlDays = -1: ttlMs = -86_400_000, so currentTimeMillis - sentAt > ttlMs is always true
+        FriendManager m = new FriendManager(tempDir, 50, -1);
+        UUID a = UUID.randomUUID(), b = UUID.randomUUID();
+        m.addRequest(a, "A", b);
+        assertFalse(m.acceptRequest(a, b));
+        assertFalse(m.areFriends(a, b));
     }
 }
