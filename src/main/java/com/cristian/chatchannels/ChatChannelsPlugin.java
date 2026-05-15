@@ -156,4 +156,10 @@ public final class ChatChannelsPlugin extends JavaPlugin {
     public HiddenChannelsManager getHiddenChannelsManager()  { return hiddenChannelsManager; }
     public @Nullable SpamFilter getSpamFilter()              { return spamFilter; }
     public WordFilter getWordFilter()                        { return wordFilter; }
+
+    // --- Stubs: replaced in Task 14 with real implementations ---
+    public com.cristian.chatchannels.crossserver.DatabaseManager getDatabaseManager() { return null; }
+    public com.cristian.chatchannels.crossserver.CrossServerMessenger getCrossServerMessenger() { return null; }
+    public com.cristian.chatchannels.pm.PrivateMessageManager getPrivateMessageManager() { return null; }
+    public com.cristian.chatchannels.pm.IgnoreManager getIgnoreManager() { return null; }
 }
