@@ -49,8 +49,8 @@ public final class FriendManager {
         if (areFriends(senderUuid, receiverUuid)) return false;
         Map<UUID, FriendRequest> senderMap =
             pendingBySender.computeIfAbsent(senderUuid, k -> new ConcurrentHashMap<>());
-        if (senderMap.containsKey(receiverUuid)) return false;
-        senderMap.put(receiverUuid, new FriendRequest(senderUuid, senderName, receiverUuid, System.currentTimeMillis()));
+        FriendRequest fresh = new FriendRequest(senderUuid, senderName, receiverUuid, System.currentTimeMillis());
+        if (senderMap.putIfAbsent(receiverUuid, fresh) != null) return false;
         saveRequests();
         return true;
     }
@@ -74,10 +74,12 @@ public final class FriendManager {
         return result;
     }
 
-    /** @return false if no pending request existed */
+    /** @return false if no valid (non-expired) pending request existed */
     public boolean acceptRequest(UUID senderUuid, UUID receiverUuid) {
         Map<UUID, FriendRequest> map = pendingBySender.get(senderUuid);
-        if (map == null || !map.containsKey(receiverUuid)) return false;
+        if (map == null) return false;
+        FriendRequest req = map.get(receiverUuid);
+        if (req == null || req.isExpired(requestTtlDays)) return false;
         map.remove(receiverUuid);
         if (map.isEmpty()) pendingBySender.remove(senderUuid);
         friends.computeIfAbsent(senderUuid, k -> ConcurrentHashMap.newKeySet()).add(receiverUuid);
@@ -98,11 +100,13 @@ public final class FriendManager {
 
     /** @return false if they were not friends */
     public boolean removeFriendship(UUID a, UUID b) {
-        boolean wasPresent = areFriends(a, b);
         Set<UUID> setA = friends.get(a);
-        if (setA != null) { setA.remove(b); if (setA.isEmpty()) friends.remove(a); }
+        boolean removedFromA = setA != null && setA.remove(b);
+        if (removedFromA && setA.isEmpty()) friends.remove(a, setA);
         Set<UUID> setB = friends.get(b);
-        if (setB != null) { setB.remove(a); if (setB.isEmpty()) friends.remove(b); }
+        boolean removedFromB = setB != null && setB.remove(a);
+        if (removedFromB && setB.isEmpty()) friends.remove(b, setB);
+        boolean wasPresent = removedFromA || removedFromB;
         if (wasPresent) save();
         return wasPresent;
     }
@@ -143,6 +147,12 @@ public final class FriendManager {
                 }
                 if (!set.isEmpty()) friends.put(uuid, set);
             } catch (IllegalArgumentException ignored) {}
+        }
+        // Repair asymmetric entries (e.g. from a partial write during a crash)
+        for (Map.Entry<UUID, Set<UUID>> e : friends.entrySet()) {
+            for (UUID other : e.getValue()) {
+                friends.computeIfAbsent(other, k -> ConcurrentHashMap.newKeySet()).add(e.getKey());
+            }
         }
     }
 
