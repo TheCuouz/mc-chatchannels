@@ -1,8 +1,8 @@
-> 🌐 [English](../PlaceholderAPI.md) · **Español**
+﻿> 🌐 [English](../PlaceholderAPI.md) · **Español**
 
 # Integración con PlaceholderAPI
 
-ChatChannels registra una expansión PAPI `chatchannels` cuando [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) está instalado. La expansión expone el estado del canal de chat del jugador actual para uso en marcadores, listas de TAB, formateadores de chat y plugins de HUD.
+ChattyChannels registra una expansión PAPI `chatchannels` cuando [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) está instalado. La expansión expone el estado del canal de chat del jugador actual para uso en marcadores, listas de TAB, formateadores de chat y plugins de HUD.
 
 ---
 
@@ -17,7 +17,7 @@ ChatChannels registra una expansión PAPI `chatchannels` cuando [PlaceholderAPI]
 /papi reload
 ```
 
-> La expansión propia de ChatChannels se registra **internamente** cuando el plugin se habilita — no está en el eCloud de PAPI. No necesitas ejecutar `/papi ecloud download ChatChannels`.
+> La expansión propia de ChattyChannels se registra **internamente** cuando el plugin se habilita — no está en el eCloud de PAPI. No necesitas ejecutar `/papi ecloud download ChattyChannels`.
 
 ### 2. Verifica el hook
 
@@ -106,7 +106,7 @@ staff:
 
 ## Uso de placeholders de otros plugins en los formatos de canal
 
-Lo inverso también está soportado: ChatChannels ejecuta cada `format:` de canal a través de PAPI antes del análisis de MiniMessage, para poder incrustar cualquier expansión instalada. El formato Global por defecto hace exactamente esto con LuckPerms:
+Lo inverso también está soportado: ChattyChannels ejecuta cada `format:` de canal a través de PAPI antes del análisis de MiniMessage, para poder incrustar cualquier expansión instalada. El formato Global por defecto hace exactamente esto con LuckPerms:
 
 ```yaml
 format: "<gray>[<gold>G</gold>]</gray> %luckperms_prefix%<player><reset>: <message>"
@@ -125,7 +125,7 @@ Otras incrustaciones populares:
 
 ## Matriz de compatibilidad
 
-| Plugin | Funciona con los placeholders de ChatChannels |
+| Plugin | Funciona con los placeholders de ChattyChannels |
 |--------|----------------------------------------------|
 | TAB by NEZNAMY | ✓ |
 | FeatherBoard | ✓ |
@@ -141,7 +141,7 @@ Otras incrustaciones populares:
 
 | Síntoma | Causa probable |
 |---------|---------------|
-| El placeholder se muestra literalmente como `%chatchannels_active%` | PlaceholderAPI no está instalado, o ChatChannels se cargó **antes** que PAPI |
+| El placeholder se muestra literalmente como `%chatchannels_active%` | PlaceholderAPI no está instalado, o ChattyChannels se cargó **antes** que PAPI |
 | Devuelve una cadena vacía | El jugador está desconectado, o se consulta como `console` (los placeholders requieren un contexto de `Player`) |
 | Siempre devuelve `local` | El jugador nunca ha ejecutado `/channel`, así que sigue en el `default-channel:` configurado |
 | `%chatchannels_muted%` devuelve `false` aunque el jugador esté silenciado | El silenciamiento se aplica a un canal diferente al canal activo del jugador — comprueba con `/mute` en el canal correcto o usa `*` |

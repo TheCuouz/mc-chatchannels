@@ -1,4 +1,4 @@
-# ChatChannels — Configuration Reference
+﻿# ChattyChannels — Configuration Reference
 
 ## channels.yml
 

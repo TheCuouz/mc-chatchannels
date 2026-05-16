@@ -1,4 +1,4 @@
-# ChatChannels — castellano
+﻿# ChattyChannels — castellano
 # Todos los strings son MiniMessage. El prefijo de chat lo añade el SDK
 # automáticamente — no hace falta <prefix> aquí.
 
@@ -19,7 +19,7 @@ spy-enabled: "<gold>Modo espía <green>activado</green>."
 spy-disabled: "<gold>Modo espía <red>desactivado</red>."
 spy-prefix: "<dark_gray>[SPY] "
 
-reload-success: "<green>ChatChannels recargado correctamente."
+reload-success: "<green>ChattyChannels recargado correctamente."
 
 filter-spam-duplicate: "<red>No envíes el mismo mensaje repetidamente."
 filter-spam-caps: "<red>Por favor escribe en minúsculas."

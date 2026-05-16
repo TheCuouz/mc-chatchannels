@@ -1,4 +1,4 @@
-# ChatChannels — english fallback
+﻿# ChattyChannels — english fallback
 # All strings are MiniMessage. The chat prefix is prepended by the SDK
 # automatically — no <prefix> needed here.
 
@@ -19,7 +19,7 @@ spy-enabled: "<gold>Spy mode <green>enabled</green>."
 spy-disabled: "<gold>Spy mode <red>disabled</red>."
 spy-prefix: "<dark_gray>[SPY] "
 
-reload-success: "<green>ChatChannels reloaded successfully."
+reload-success: "<green>ChattyChannels reloaded successfully."
 
 filter-spam-duplicate: "<red>Don't send the same message repeatedly."
 filter-spam-caps: "<red>Please write in lowercase."

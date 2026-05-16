@@ -1,6 +1,6 @@
-# Changelog
+﻿# Changelog
 
-All notable changes to ChatChannels are documented here.
+All notable changes to ChattyChannels are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.2.0] — 2026-05-15
@@ -8,7 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - **Private messaging system** — `/msg` (aliases: `/tell`, `/whisper`, `/w`), `/reply` (alias: `/r`), and `/ignore` with persistent YAML ignore list
 - **Social spy extended** — `/chatspy` now intercepts private messages in addition to channel messages
-- **Chat log** — daily-rotating log at `plugins/ChatChannels/logs/chat-YYYY-MM-DD.log` covering both channel messages and PMs; toggled via `logging.enabled` in `config.yml`
+- **Chat log** — daily-rotating log at `plugins/ChattyChannels/logs/chat-YYYY-MM-DD.log` covering both channel messages and PMs; toggled via `logging.enabled` in `config.yml`
 - **Friends system** — `/friend add/accept/deny/remove/list/requests/notify` with clickable Accept/Reject buttons in chat; friend online/offline notifications with per-player toggle
 - **Cross-server support (optional)** — configure MySQL in `config.yml` to enable: PM routing to players on other servers via BungeeCord plugin messaging channel `chatchannels:pm`, shared friend list and session tracking across instances
 - New permissions: `chatchannels.pm.send`, `chatchannels.pm.receive`, `chatchannels.pm.bypass-ignore`, `chatchannels.ignore`, `chatchannels.friends`
@@ -29,7 +29,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `/cc show <#channel>` — restore the channel to your view
   - `/cc hidden` — list the channels you currently have hidden
 - New permission `chatchannels.hide` (default `true`) gating the player-side commands above
-- Persistent storage of hidden channels in `plugins/ChatChannels/hidden_channels.yml`, preserved across restarts
+- Persistent storage of hidden channels in `plugins/ChattyChannels/hidden_channels.yml`, preserved across restarts
 - New `messages.yml` keys: `channel-hidden`, `channel-shown`, `channel-not-hidden`, `channel-already-hidden`, `hidden-list-empty`, `hidden-list`
 
 ### Changed

@@ -1,4 +1,4 @@
-# ChatChannels
+﻿# ChattyChannels
 
 Configurable chat channels for Paper 1.21.x servers. Create unlimited channels with custom permissions, quick-type prefixes, range limits, cooldowns, mute system, staff spy mode, and anti-spam filters.
 
@@ -27,10 +27,10 @@ Configurable chat channels for Paper 1.21.x servers. Create unlimited channels w
 
 ## Installation
 
-1. Drop `ChatChannels-1.0.0.jar` into your `plugins/` folder.
+1. Drop `ChattyChannels-1.0.0.jar` into your `plugins/` folder.
 2. Restart your server.
-3. Edit `plugins/ChatChannels/channels.yml` to configure your channels and filters.
-4. Edit `plugins/ChatChannels/messages.yml` to customize player-facing messages.
+3. Edit `plugins/ChattyChannels/channels.yml` to configure your channels and filters.
+4. Edit `plugins/ChattyChannels/messages.yml` to customize player-facing messages.
 5. Run `/cc reload` to apply changes without restarting.
 
 ## Quick start

@@ -1,4 +1,4 @@
-# ChatChannels — PlaceholderAPI Placeholders
+﻿# ChattyChannels — PlaceholderAPI Placeholders
 
 Requires [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) installed on the server.
 

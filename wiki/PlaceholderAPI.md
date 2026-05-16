@@ -1,8 +1,8 @@
-> 🌐 **English** · [Español](es/PlaceholderAPI.md)
+﻿> 🌐 **English** · [Español](es/PlaceholderAPI.md)
 
 # PlaceholderAPI Integration
 
-ChatChannels registers a `chatchannels` PAPI expansion when [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) is installed. The expansion exposes the current player's chat-channel state for use in scoreboards, TAB lists, chat formatters, and HUD plugins.
+ChattyChannels registers a `chatchannels` PAPI expansion when [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) is installed. The expansion exposes the current player's chat-channel state for use in scoreboards, TAB lists, chat formatters, and HUD plugins.
 
 ---
 
@@ -17,7 +17,7 @@ ChatChannels registers a `chatchannels` PAPI expansion when [PlaceholderAPI](htt
 /papi reload
 ```
 
-> ChatChannels' own expansion is registered **internally** when the plugin enables — it is not on the PAPI eCloud. You do not need to run `/papi ecloud download ChatChannels`.
+> ChattyChannels' own expansion is registered **internally** when the plugin enables — it is not on the PAPI eCloud. You do not need to run `/papi ecloud download ChattyChannels`.
 
 ### 2. Verify the hook
 
@@ -106,7 +106,7 @@ staff:
 
 ## Using Other Plugins' Placeholders in Channel Formats
 
-The reverse is also supported: ChatChannels runs every channel `format:` through PAPI before MiniMessage parsing, so you can embed any installed expansion. The default Global format does exactly this with LuckPerms:
+The reverse is also supported: ChattyChannels runs every channel `format:` through PAPI before MiniMessage parsing, so you can embed any installed expansion. The default Global format does exactly this with LuckPerms:
 
 ```yaml
 format: "<gray>[<gold>G</gold>]</gray> %luckperms_prefix%<player><reset>: <message>"
@@ -125,7 +125,7 @@ Other popular embeds:
 
 ## Compatibility Matrix
 
-| Plugin | Works with ChatChannels Placeholders |
+| Plugin | Works with ChattyChannels Placeholders |
 |--------|--------------------------------------|
 | TAB by NEZNAMY | ✓ |
 | FeatherBoard | ✓ |
@@ -141,7 +141,7 @@ Other popular embeds:
 
 | Symptom | Likely cause |
 |---------|-------------|
-| Placeholder shows literally as `%chatchannels_active%` | PlaceholderAPI not installed, or ChatChannels was loaded **before** PAPI |
+| Placeholder shows literally as `%chatchannels_active%` | PlaceholderAPI not installed, or ChattyChannels was loaded **before** PAPI |
 | Returns empty string | Player is offline, or being queried as `console` (placeholders require a `Player` context) |
 | Always returns `local` | The player has never run `/channel`, so they're still on the configured `default-channel:` |
 | `%chatchannels_muted%` returns `false` even though the player is muted | The mute applies to a different channel than the player's active one — check with `/mute` on the right channel or `*` |

@@ -53,7 +53,7 @@ public class ChatChannelsRootCommand implements CommandExecutor {
         plugin.reload();
         ChatPrefix.send(sender, identity,
             plugin.getMessagesConfig().getString("reload-success",
-                "<green>ChatChannels recargado correctamente."));
+                "<green>ChattyChannels recargado correctamente."));
         return true;
     }
 

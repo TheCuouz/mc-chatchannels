@@ -1,7 +1,7 @@
-name: ChatChannels
+﻿name: ChattyChannels
 version: ${project.version}
 description: Configurable chat channels with permissions, quick prefixes, mute, spy mode and anti-spam filters.
-main: com.cristian.chatchannels.ChatChannelsPlugin
+main: com.cristian.chatchannels.ChattyChannelsPlugin
 author: Cristian
 website: https://www.spigotmc.org/resources/chatchannels/
 
@@ -32,7 +32,7 @@ commands:
     usage: /chatspy
     permission: chatchannels.spy
   cc:
-    description: ChatChannels admin and player commands
+    description: ChattyChannels admin and player commands
     usage: /cc <reload|hide #channel|show #channel|hidden>
     aliases: [chatchannels]
     permission: chatchannels.use
@@ -57,7 +57,7 @@ commands:
 
 permissions:
   chatchannels.use:
-    description: Basic access to ChatChannels
+    description: Basic access to ChattyChannels
     default: true
   chatchannels.use.global:
     description: Access to the global channel

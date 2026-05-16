@@ -1,8 +1,8 @@
-> 🌐 **English** · [Español](es/Installation.md)
+﻿> 🌐 **English** · [Español](es/Installation.md)
 
 # Installation
 
-ChatChannels installs in under a minute: drop the JAR, restart the server, done. The default `channels.yml` ships with four production-ready channels so you can verify the plugin works before customising anything.
+ChattyChannels installs in under a minute: drop the JAR, restart the server, done. The default `channels.yml` ships with four production-ready channels so you can verify the plugin works before customising anything.
 
 ---
 
@@ -24,7 +24,7 @@ ChatChannels installs in under a minute: drop the JAR, restart the server, done.
 ### 1. Drop the JAR
 
 ```bash
-cp ChatChannels-1.0.0.jar /path/to/server/plugins/
+cp ChattyChannels-1.0.0.jar /path/to/server/plugins/
 ```
 
 ### 2. Restart the server
@@ -33,12 +33,12 @@ A full restart (or first start) is required so the plugin can generate its confi
 
 ### 3. Verify the console banner
 
-When ChatChannels enables you will see the framed TTS-Studio banner:
+When ChattyChannels enables you will see the framed TTS-Studio banner:
 
 ```
 ╔═══════════════════════════════════════════════╗
 ║                                               ║
-║                ChatChannels v1.0.0            ║
+║                ChattyChannels v1.0.0            ║
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
   ◈ Channels: 4 channels · PAPI ✓ · ready in 42ms
@@ -53,7 +53,7 @@ If you see `no PAPI` and want placeholder support, install PlaceholderAPI and re
 
 ### 4. Confirm the default channels
 
-The plugin ships with four channels in `plugins/ChatChannels/channels.yml`:
+The plugin ships with four channels in `plugins/ChattyChannels/channels.yml`:
 
 | ID | Display | Quick Prefix | Range | Permission |
 |----|---------|--------------|-------|------------|
@@ -89,7 +89,7 @@ Or inline, without switching:
 
 ```
 plugins/
-└── ChatChannels/
+└── ChattyChannels/
     ├── channels.yml      # All channel definitions + filter settings
     ├── config.yml        # Plugin-wide settings (config-version)
     └── messages.yml      # All player-facing strings (MiniMessage)
@@ -111,7 +111,7 @@ plugins/
 ## Upgrading
 
 1. Stop the server.
-2. Replace `ChatChannels-X.X.X.jar` in `plugins/`.
+2. Replace `ChattyChannels-X.X.X.jar` in `plugins/`.
 3. Start the server. The plugin will not overwrite your edited `channels.yml`.
 4. Check the changelog for any new keys you may want to add manually.
 

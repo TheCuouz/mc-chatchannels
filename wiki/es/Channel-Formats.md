@@ -1,8 +1,8 @@
-> 🌐 [English](../Channel-Formats.md) · **Español**
+﻿> 🌐 [English](../Channel-Formats.md) · **Español**
 
 # Formatos de canal
 
-La cadena `format:` de cada canal en `channels.yml` controla exactamente cómo se renderiza un mensaje para los receptores. ChatChannels usa el formato [MiniMessage](https://docs.advntr.dev/minimessage/format.html) de Adventure — el reemplazo moderno basado en etiquetas para los códigos `&` heredados — y procesa cada mensaje a través de PlaceholderAPI (cuando está presente) antes de la deserialización de etiquetas.
+La cadena `format:` de cada canal en `channels.yml` controla exactamente cómo se renderiza un mensaje para los receptores. ChattyChannels usa el formato [MiniMessage](https://docs.advntr.dev/minimessage/format.html) de Adventure — el reemplazo moderno basado en etiquetas para los códigos `&` heredados — y procesa cada mensaje a través de PlaceholderAPI (cuando está presente) antes de la deserialización de etiquetas.
 
 > Recordatorio: `format:` es el **contenido del chat del jugador**. Intencionalmente **no** está envuelto en el prefijo TTS `◈ Channels:`. Ese prefijo está reservado para mensajes de voz del plugin provenientes de `messages.yml` (por ejemplo, "te uniste al canal #trade", "canal no encontrado", "silenciamiento aplicado").
 
@@ -10,7 +10,7 @@ La cadena `format:` de cada canal en `channels.yml` controla exactamente cómo s
 
 ## El pipeline
 
-Dado un input de chat sin procesar como `WTS 64 diamantes`, esto es lo que ChatChannels hace para producir el componente final enviado a los espectadores:
+Dado un input de chat sin procesar como `WTS 64 diamantes`, esto es lo que ChattyChannels hace para producir el componente final enviado a los espectadores:
 
 ```
 1. input sin procesar   →  "WTS 64 diamantes"
@@ -31,7 +31,7 @@ Este orden importa: **los placeholders de PAPI se ejecutan antes del análisis d
 
 ## Placeholders integrados
 
-Estos son sustituidos por ChatChannels mismo (no por PAPI):
+Estos son sustituidos por ChattyChannels mismo (no por PAPI):
 
 | Placeholder | Reemplazado por |
 |-------------|----------------|
@@ -53,7 +53,7 @@ Cuando PlaceholderAPI está instalado y activo, **cualquier** placeholder `%expa
 | `%luckperms_prefix%` | LuckPerms | `<gold>[VIP]<reset> ` |
 | `%vault_prefix%` | Vault | `&6[Mod]&r ` |
 | `%essentials_nickname%` | Essentials | `Steve_the_Brave` |
-| `%chatchannels_active%` | ChatChannels (este plugin) | `trade` |
+| `%chatchannels_active%` | ChattyChannels (este plugin) | `trade` |
 
 El formato Global por defecto usa `%luckperms_prefix%`:
 
@@ -143,7 +143,7 @@ format: "<gray>[L]<dark_gray>(%player_world%)<reset> <player>: <message>"
 
 ## Escape y seguridad
 
-| Preocupación | Cómo lo gestiona ChatChannels |
+| Preocupación | Cómo lo gestiona ChattyChannels |
 |-------------|-------------------------------|
 | Jugadores inyectando etiquetas MiniMessage | `<` en `<message>` se escapa a `\<` antes del análisis |
 | Jugadores inyectando placeholders de PAPI | PAPI se ejecuta en el **formato**, no en `<message>` — los jugadores no pueden desencadenar la expansión de placeholders a través del chat |
@@ -153,7 +153,7 @@ format: "<gray>[L]<dark_gray>(%player_world%)<reset> <player>: <message>"
 
 ## Marca del banner de consola
 
-El banner de TTS-Studio emitido al habilitarse usa el alias de marca **Channels** (azul cielo `#5DADE2`) porque el nombre completo `ChatChannels` tiene 12 caracteres y supera el presupuesto de 10 caracteres del SDK. El prefijo que envuelve los mensajes de voz del plugin es `◈ Channels:`. **No** necesitas (y no deberías) reproducir este prefijo dentro de las cadenas `format:` del canal — eso etiquetaría cada mensaje del jugador como output del plugin y atribuiría erróneamente el discurso.
+El banner de TTS-Studio emitido al habilitarse usa el alias de marca **Channels** (azul cielo `#5DADE2`) porque el nombre completo `ChattyChannels` tiene 12 caracteres y supera el presupuesto de 10 caracteres del SDK. El prefijo que envuelve los mensajes de voz del plugin es `◈ Channels:`. **No** necesitas (y no deberías) reproducir este prefijo dentro de las cadenas `format:` del canal — eso etiquetaría cada mensaje del jugador como output del plugin y atribuiría erróneamente el discurso.
 
 ---
 

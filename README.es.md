@@ -1,4 +1,4 @@
-# 💬 ChatChannels
+﻿# 💬 ChattyChannels
 
 ```
   ██████╗██╗  ██╗ █████╗ ████████╗ ██████╗██╗  ██╗ █████╗ ███╗   ██╗███╗   ██╗███████╗██╗     ███████╗
@@ -46,7 +46,7 @@ cp chatchannels-1.1.0.jar plugins/
 #    Los canales por defecto (global, local, trade, staff) se generan al primer arranque.
 
 # 3. Personaliza los canales
-nano plugins/ChatChannels/channels.yml
+nano plugins/ChattyChannels/channels.yml
 
 # 4. Recarga en caliente tras los cambios — sin reinicio
 /cc reload
@@ -64,7 +64,7 @@ nano plugins/ChatChannels/channels.yml
 /cc hidden             # mostrar qué canales tienes ocultos
 ```
 
-Las selecciones sobreviven a los reinicios (almacenadas en `plugins/ChatChannels/hidden_channels.yml`). El canal sigue activo para el resto de jugadores — esto es un toggle **por jugador, en el lado de recepción**.
+Las selecciones sobreviven a los reinicios (almacenadas en `plugins/ChattyChannels/hidden_channels.yml`). El canal sigue activo para el resto de jugadores — esto es un toggle **por jugador, en el lado de recepción**.
 
 ### Diferencia con `/mute`
 
@@ -123,7 +123,7 @@ Ambos sistemas son completamente independientes y pueden combinarse libremente.
 ## ⚙️ Resumen de configuración
 
 ```yaml
-# plugins/ChatChannels/channels.yml
+# plugins/ChattyChannels/channels.yml
 default-channel: local
 
 channels:
@@ -192,7 +192,7 @@ PlaceholderAPI se detecta automáticamente al arrancar; los placeholders no hace
 
 Abre un issue en el repositorio de GitHub con:
 
-- Versión de ChatChannels (`/version ChatChannels`)
+- Versión de ChattyChannels (`/version ChattyChannels`)
 - Tipo y versión del servidor (build de Paper, versión de Java)
 - Un `channels.yml` mínimo que reproduzca el problema
 - Extracto del log del servidor — especialmente el stack trace si hay uno
@@ -203,8 +203,8 @@ Abre un issue en el repositorio de GitHub con:
 
 ## 📜 Licencia
 
-ChatChannels se distribuye bajo la **licencia open-source de TTS-Studio** como parte de la suite gratuita de SpigotMC. Consulta `LICENSE` para los términos completos.
+ChattyChannels se distribuye bajo la **licencia open-source de TTS-Studio** como parte de la suite gratuita de SpigotMC. Consulta `LICENSE` para los términos completos.
 
 ---
 
-<sub>ChatChannels es un plugin de TTS-Studio · © TTS-Studio · dando a cada jugador su propio chat desde 2024.</sub>
+<sub>ChattyChannels es un plugin de TTS-Studio · © TTS-Studio · dando a cada jugador su propio chat desde 2024.</sub>

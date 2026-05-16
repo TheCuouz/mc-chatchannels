@@ -24,7 +24,7 @@ public final class DatabaseManager {
         cfg.setPassword(password);
         cfg.setMaximumPoolSize(poolSize);
         cfg.setConnectionTimeout(5_000);
-        cfg.setPoolName("ChatChannels");
+        cfg.setPoolName("ChattyChannels");
         this.dataSource = new HikariDataSource(cfg);
         initialize();
     }

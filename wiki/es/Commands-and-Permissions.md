@@ -1,8 +1,8 @@
-> 🌐 [English](../Commands-and-Permissions.md) · **Español**
+﻿> 🌐 [English](../Commands-and-Permissions.md) · **Español**
 
 # Comandos y permisos
 
-Todos los comandos de ChatChannels y sus permisos se resumen a continuación. Los valores por defecto de los permisos siguen `plugin.yml` y son los mismos que los de una instalación nueva.
+Todos los comandos de ChattyChannels y sus permisos se resumen a continuación. Los valores por defecto de los permisos siguen `plugin.yml` y son los mismos que los de una instalación nueva.
 
 ---
 
@@ -94,7 +94,7 @@ Vuelve a leer `channels.yml` (definiciones de canal, filtro de spam, filtro de p
 
 ```text
 > /cc reload
-◈ Channels: ChatChannels recargado correctamente.
+◈ Channels: ChattyChannels recargado correctamente.
 ```
 
 ---

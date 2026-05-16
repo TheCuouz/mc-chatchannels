@@ -1,8 +1,8 @@
-> 🌐 **English** · [Español](es/Commands-and-Permissions.md)
+﻿> 🌐 **English** · [Español](es/Commands-and-Permissions.md)
 
 # Commands & Permissions
 
-All ChatChannels commands and their permissions are summarised below. Permission defaults follow `plugin.yml` and are the same as what a fresh install ships with.
+All ChattyChannels commands and their permissions are summarised below. Permission defaults follow `plugin.yml` and are the same as what a fresh install ships with.
 
 ---
 
@@ -94,7 +94,7 @@ Re-reads `channels.yml` (channel definitions, spam filter, word filter) and `mes
 
 ```text
 > /cc reload
-◈ Channels: ChatChannels recargado correctamente.
+◈ Channels: ChattyChannels recargado correctamente.
 ```
 
 ---

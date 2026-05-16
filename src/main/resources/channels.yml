@@ -1,4 +1,4 @@
-# ChatChannels — channel configuration
+﻿# ChattyChannels — channel configuration
 # range: -1 means global (all worlds, all players online)
 # range: N means only players within N blocks in the same world
 # quick-prefix: type this at the start of your message to send to that channel without switching
