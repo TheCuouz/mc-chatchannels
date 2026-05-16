@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.listener;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener {
 
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
 
-    public PlayerListener(ChatChannelsPlugin plugin) {
+    public PlayerListener(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
     }
 

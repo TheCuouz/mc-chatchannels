@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.command;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import com.cristian.chatchannels.channel.Channel;
 import com.ttsstudio.sdk.PluginIdentity;
 import com.ttsstudio.sdk.chat.ChatPrefix;
@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 
 public class ChannelCommand implements CommandExecutor, TabCompleter {
 
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
     private final PluginIdentity identity;
 
-    public ChannelCommand(ChatChannelsPlugin plugin) {
+    public ChannelCommand(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
         this.identity = PluginIdentity.of(plugin);
     }

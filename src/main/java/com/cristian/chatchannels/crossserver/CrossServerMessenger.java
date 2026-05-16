@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.crossserver;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
@@ -13,9 +13,9 @@ public final class CrossServerMessenger implements PluginMessageListener {
 
     public static final String CHANNEL = "chatchannels:pm";
 
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
 
-    public CrossServerMessenger(ChatChannelsPlugin plugin) {
+    public CrossServerMessenger(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
     }
 
