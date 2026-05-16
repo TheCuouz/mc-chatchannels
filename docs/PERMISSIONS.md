@@ -1,8 +1,8 @@
-# ChatChannels — Permissions
+﻿# ChattyChannels — Permissions
 
 | Permission | Default | Description |
 |------------|---------|-------------|
-| `chatchannels.use` | `true` | Basic access to ChatChannels commands |
+| `chatchannels.use` | `true` | Basic access to ChattyChannels commands |
 | `chatchannels.use.global` | `true` | Access to the global channel |
 | `chatchannels.use.local` | `true` | Access to the local channel |
 | `chatchannels.use.trade` | `true` | Access to the trade channel |

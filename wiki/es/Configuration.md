@@ -1,11 +1,11 @@
-> 🌐 [English](../Configuration.md) · **Español**
+﻿> 🌐 [English](../Configuration.md) · **Español**
 
 # Configuración
 
-Toda la configuración de ChatChannels se encuentra en dos archivos:
+Toda la configuración de ChattyChannels se encuentra en dos archivos:
 
 ```
-plugins/ChatChannels/
+plugins/ChattyChannels/
 ├── channels.yml    # Definiciones de canal + configuración del filtro de spam/palabras
 └── messages.yml    # Cadenas de cara al jugador (voz del plugin con prefijo TTS)
 ```
@@ -19,7 +19,7 @@ Tras editar cualquiera de los dos, ejecuta `/cc reload` — no es necesario rein
 ## `channels.yml` completo
 
 ```yaml
-# ChatChannels — configuración de canales
+# ChattyChannels — configuración de canales
 # range: -1  → global (todos los mundos, todos los jugadores en línea)
 # range: N   → solo jugadores dentro de N bloques en el mismo mundo
 # quick-prefix: escribe esto al inicio de tu mensaje para enviarlo a ese
@@ -184,7 +184,7 @@ Los mensajes bloqueados activan el mensaje `filter-word-block`. Los jugadores co
 Cada línea de voz del plugin. Edítalo para traducir o cambiar la marca. Los placeholders entre corchetes angulares se sustituyen en el momento del envío.
 
 ```yaml
-prefix: "<gray>[<gold>ChatChannels</gold>]</gray> "
+prefix: "<gray>[<gold>ChattyChannels</gold>]</gray> "
 
 channel-switched:        "<green>Cambiaste al canal <channel>."
 channel-not-found:       "<red>Canal '<id>' no encontrado."
@@ -203,7 +203,7 @@ spy-enabled:             "<gold>Modo espía <green>activado</green>."
 spy-disabled:            "<gold>Modo espía <red>desactivado</red>."
 spy-prefix:              "<dark_gray>[SPY] "
 
-reload-success:          "<green>ChatChannels recargado correctamente."
+reload-success:          "<green>ChattyChannels recargado correctamente."
 
 filter-spam-duplicate:   "<red>No envíes el mismo mensaje repetidamente."
 filter-spam-caps:        "<red>Por favor escribe en minúsculas."

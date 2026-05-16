@@ -1,4 +1,4 @@
-> 🌐 **English** · [Español](es/Home.md)
+﻿> 🌐 **English** · [Español](es/Home.md)
 
 # Channels Wiki
 
@@ -13,24 +13,24 @@
 
 **Multi-channel chat for Paper 1.21.x** — split Global, Local, Trade, and Staff into independent streams with permissions, radius, anti-spam, mutes, and admin spy mode. Part of the **TTS-Studio** plugin suite.
 
-> Brand alias: **Channels** (the full name "ChatChannels" is 12 chars; TTS uses the shortened alias for prefixes and the console banner). Brand color: sky blue `#5DADE2`.
+> Brand alias: **Channels** (the full name "ChattyChannels" is 12 chars; TTS uses the shortened alias for prefixes and the console banner). Brand color: sky blue `#5DADE2`.
 
 ---
 
 ## Console Banner
 
-On enable, ChatChannels emits a framed TTS-Studio banner:
+On enable, ChattyChannels emits a framed TTS-Studio banner:
 
 ```
 ╔═══════════════════════════════════════════════╗
 ║                                               ║
-║                ChatChannels v1.0.0            ║
+║                ChattyChannels v1.0.0            ║
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
   ◈ Channels: 4 channels · PAPI ✓ · ready in 42ms
 ```
 
-The `◈ Channels:` prefix (TTS chat-prefix) is used for **plugin-voice messages only** — feedback like `you joined #trade`, `channel not found`, `mute applied`, `reload complete`. **Actual chat content** is rendered using each channel's own `format:` string from `channels.yml` and is **never** wrapped in the TTS prefix. That separation is intentional: branding plugin output is good UX; branding player speech would mis-attribute every message in the server to ChatChannels.
+The `◈ Channels:` prefix (TTS chat-prefix) is used for **plugin-voice messages only** — feedback like `you joined #trade`, `channel not found`, `mute applied`, `reload complete`. **Actual chat content** is rendered using each channel's own `format:` string from `channels.yml` and is **never** wrapped in the TTS prefix. That separation is intentional: branding plugin output is good UX; branding player speech would mis-attribute every message in the server to ChattyChannels.
 
 ---
 
@@ -56,7 +56,7 @@ The `◈ Channels:` prefix (TTS chat-prefix) is used for **plugin-voice messages
 
 ```bash
 # 1. Drop the jar into plugins/
-cp ChatChannels-1.0.0.jar plugins/
+cp ChattyChannels-1.0.0.jar plugins/
 
 # 2. Restart the server — channels.yml is generated automatically
 
@@ -99,4 +99,4 @@ cp ChatChannels-1.0.0.jar plugins/
 
 ---
 
-*ChatChannels — part of the [TTS-Studio](https://ttsstudio.dev) plugin suite. Sky-blue branded, professionally maintained.*
+*ChattyChannels — part of the [TTS-Studio](https://ttsstudio.dev) plugin suite. Sky-blue branded, professionally maintained.*

@@ -105,7 +105,7 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         registerListeners();
         registerCommands();
 
-        new org.bstats.bukkit.Metrics(this, 12345);
+        new org.bstats.bukkit.Metrics(this, 31361);
 
         ConsoleBanner.enable(this, PluginIdentity.of(this))
             .status(channelRegistry.getAll().size() + " channels")

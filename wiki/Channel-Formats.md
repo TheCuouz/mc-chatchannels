@@ -1,8 +1,8 @@
-> 🌐 **English** · [Español](es/Channel-Formats.md)
+﻿> 🌐 **English** · [Español](es/Channel-Formats.md)
 
 # Channel Formats
 
-Every channel's `format:` string in `channels.yml` controls exactly how a message renders for the recipients. ChatChannels uses Adventure's [MiniMessage](https://docs.advntr.dev/minimessage/format.html) format — the modern, tag-based replacement for legacy `&`-codes — and runs each message through PlaceholderAPI (when present) before tag deserialisation.
+Every channel's `format:` string in `channels.yml` controls exactly how a message renders for the recipients. ChattyChannels uses Adventure's [MiniMessage](https://docs.advntr.dev/minimessage/format.html) format — the modern, tag-based replacement for legacy `&`-codes — and runs each message through PlaceholderAPI (when present) before tag deserialisation.
 
 > Reminder: `format:` is **player chat content**. It is intentionally **not** wrapped in the TTS `◈ Channels:` prefix. That prefix is reserved for plugin-voice messages from `messages.yml` (e.g. "you joined #trade", "channel not found", "mute applied").
 
@@ -10,7 +10,7 @@ Every channel's `format:` string in `channels.yml` controls exactly how a messag
 
 ## The Pipeline
 
-Given a raw chat input like `WTS 64 diamonds`, this is what ChatChannels does to produce the final component sent to viewers:
+Given a raw chat input like `WTS 64 diamonds`, this is what ChattyChannels does to produce the final component sent to viewers:
 
 ```
 1. raw input        →  "WTS 64 diamonds"
@@ -31,7 +31,7 @@ This ordering matters: **PAPI placeholders run before MiniMessage parsing**, so 
 
 ## Built-in Placeholders
 
-These are substituted by ChatChannels itself (not PAPI):
+These are substituted by ChattyChannels itself (not PAPI):
 
 | Placeholder | Replaced with |
 |-------------|---------------|
@@ -53,7 +53,7 @@ When PlaceholderAPI is installed and enabled, **any** `%expansion_value%` placeh
 | `%luckperms_prefix%` | LuckPerms | `<gold>[VIP]<reset> ` |
 | `%vault_prefix%` | Vault | `&6[Mod]&r ` |
 | `%essentials_nickname%` | Essentials | `Steve_the_Brave` |
-| `%chatchannels_active%` | ChatChannels (this plugin) | `trade` |
+| `%chatchannels_active%` | ChattyChannels (this plugin) | `trade` |
 
 The default Global format uses `%luckperms_prefix%`:
 
@@ -143,7 +143,7 @@ format: "<gray>[L]<dark_gray>(%player_world%)<reset> <player>: <message>"
 
 ## Escaping & Safety
 
-| Concern | How ChatChannels handles it |
+| Concern | How ChattyChannels handles it |
 |---------|------------------------------|
 | Players injecting MiniMessage tags | `<` in `<message>` is escaped to `\<` before parsing |
 | Players injecting PAPI placeholders | PAPI runs on the **format**, not on `<message>` — players cannot trigger placeholder expansion via chat |
@@ -153,7 +153,7 @@ format: "<gray>[L]<dark_gray>(%player_world%)<reset> <player>: <message>"
 
 ## Console Banner Branding
 
-The TTS-Studio banner emitted on enable uses the brand alias **Channels** (sky-blue `#5DADE2`) because the full name `ChatChannels` is 12 chars and exceeds the 10-char SDK budget. The prefix that wraps plugin-voice messages is `◈ Channels:`. You do **not** need to (and should not) reproduce this prefix inside channel `format:` strings — that would brand every player message as plugin output and mis-attribute speech.
+The TTS-Studio banner emitted on enable uses the brand alias **Channels** (sky-blue `#5DADE2`) because the full name `ChattyChannels` is 12 chars and exceeds the 10-char SDK budget. The prefix that wraps plugin-voice messages is `◈ Channels:`. You do **not** need to (and should not) reproduce this prefix inside channel `format:` strings — that would brand every player message as plugin output and mis-attribute speech.
 
 ---
 

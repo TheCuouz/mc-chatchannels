@@ -1,8 +1,8 @@
-> 🌐 [English](../Installation.md) · **Español**
+﻿> 🌐 [English](../Installation.md) · **Español**
 
 # Instalación
 
-ChatChannels se instala en menos de un minuto: coloca el JAR, reinicia el servidor, listo. El `channels.yml` por defecto incluye cuatro canales listos para producción para que puedas verificar que el plugin funciona antes de personalizar nada.
+ChattyChannels se instala en menos de un minuto: coloca el JAR, reinicia el servidor, listo. El `channels.yml` por defecto incluye cuatro canales listos para producción para que puedas verificar que el plugin funciona antes de personalizar nada.
 
 ---
 
@@ -24,7 +24,7 @@ ChatChannels se instala en menos de un minuto: coloca el JAR, reinicia el servid
 ### 1. Coloca el JAR
 
 ```bash
-cp ChatChannels-1.0.0.jar /ruta/a/tu/servidor/plugins/
+cp ChattyChannels-1.0.0.jar /ruta/a/tu/servidor/plugins/
 ```
 
 ### 2. Reinicia el servidor
@@ -33,12 +33,12 @@ Se requiere un reinicio completo (o primer inicio) para que el plugin pueda gene
 
 ### 3. Verifica el banner de consola
 
-Al habilitarse ChatChannels verás el banner de TTS-Studio enmarcado:
+Al habilitarse ChattyChannels verás el banner de TTS-Studio enmarcado:
 
 ```
 ╔═══════════════════════════════════════════════╗
 ║                                               ║
-║                ChatChannels v1.0.0            ║
+║                ChattyChannels v1.0.0            ║
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
   ◈ Channels: 4 channels · PAPI ✓ · ready in 42ms
@@ -53,7 +53,7 @@ Si ves `no PAPI` y quieres soporte de placeholders, instala PlaceholderAPI y rei
 
 ### 4. Confirma los canales por defecto
 
-El plugin incluye cuatro canales en `plugins/ChatChannels/channels.yml`:
+El plugin incluye cuatro canales en `plugins/ChattyChannels/channels.yml`:
 
 | ID | Nombre | Prefijo rápido | Rango | Permiso |
 |----|--------|----------------|-------|---------|
@@ -89,7 +89,7 @@ O directamente, sin cambiar de canal:
 
 ```
 plugins/
-└── ChatChannels/
+└── ChattyChannels/
     ├── channels.yml      # Todas las definiciones de canal + configuración del filtro
     ├── config.yml        # Ajustes de todo el plugin (config-version)
     └── messages.yml      # Todas las cadenas de cara al jugador (MiniMessage)
@@ -111,7 +111,7 @@ plugins/
 ## Actualización
 
 1. Detén el servidor.
-2. Reemplaza `ChatChannels-X.X.X.jar` en `plugins/`.
+2. Reemplaza `ChattyChannels-X.X.X.jar` en `plugins/`.
 3. Inicia el servidor. El plugin no sobrescribirá tu `channels.yml` editado.
 4. Consulta el registro de cambios para ver si hay claves nuevas que quieras añadir manualmente.
 

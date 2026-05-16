@@ -1,4 +1,4 @@
-> 🌐 [English](../Home.md) · **Español**
+﻿> 🌐 [English](../Home.md) · **Español**
 
 # Wiki de Channels
 
@@ -13,24 +13,24 @@
 
 **Chat multicanal para Paper 1.21.x** — divide el chat en Global, Local, Trade y Staff como flujos independientes con permisos, radio, anti-spam, silenciamientos y modo espía de administrador. Parte de la suite de plugins **TTS-Studio**.
 
-> Alias de marca: **Channels** (el nombre completo "ChatChannels" tiene 12 caracteres; TTS usa el alias abreviado para los prefijos y el banner de consola). Color de marca: azul cielo `#5DADE2`.
+> Alias de marca: **Channels** (el nombre completo "ChattyChannels" tiene 12 caracteres; TTS usa el alias abreviado para los prefijos y el banner de consola). Color de marca: azul cielo `#5DADE2`.
 
 ---
 
 ## Banner de consola
 
-Al habilitarse, ChatChannels emite un banner de TTS-Studio enmarcado:
+Al habilitarse, ChattyChannels emite un banner de TTS-Studio enmarcado:
 
 ```
 ╔═══════════════════════════════════════════════╗
 ║                                               ║
-║                ChatChannels v1.0.0            ║
+║                ChattyChannels v1.0.0            ║
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
   ◈ Channels: 4 channels · PAPI ✓ · ready in 42ms
 ```
 
-El prefijo `◈ Channels:` (prefijo de chat de TTS) se usa **solo para mensajes del plugin** — feedback como `cambiaste al canal #trade`, `canal no encontrado`, `silenciamiento aplicado`, `recarga completada`. El **contenido real del chat** se renderiza usando la cadena `format:` propia de cada canal en `channels.yml` y **nunca** se envuelve en el prefijo de TTS. Esa separación es intencional: marcar el output del plugin es buena UX; marcar el discurso de los jugadores atribuiría erróneamente cada mensaje del servidor a ChatChannels.
+El prefijo `◈ Channels:` (prefijo de chat de TTS) se usa **solo para mensajes del plugin** — feedback como `cambiaste al canal #trade`, `canal no encontrado`, `silenciamiento aplicado`, `recarga completada`. El **contenido real del chat** se renderiza usando la cadena `format:` propia de cada canal en `channels.yml` y **nunca** se envuelve en el prefijo de TTS. Esa separación es intencional: marcar el output del plugin es buena UX; marcar el discurso de los jugadores atribuiría erróneamente cada mensaje del servidor a ChattyChannels.
 
 ---
 
@@ -56,7 +56,7 @@ El prefijo `◈ Channels:` (prefijo de chat de TTS) se usa **solo para mensajes 
 
 ```bash
 # 1. Coloca el jar en plugins/
-cp ChatChannels-1.0.0.jar plugins/
+cp ChattyChannels-1.0.0.jar plugins/
 
 # 2. Reinicia el servidor — channels.yml se genera automáticamente
 
@@ -99,4 +99,4 @@ cp ChatChannels-1.0.0.jar plugins/
 
 ---
 
-*ChatChannels — parte de la suite de plugins [TTS-Studio](https://ttsstudio.dev). Marca azul cielo, mantenido profesionalmente.*
+*ChattyChannels — parte de la suite de plugins [TTS-Studio](https://ttsstudio.dev). Marca azul cielo, mantenido profesionalmente.*

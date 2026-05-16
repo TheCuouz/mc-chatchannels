@@ -1,4 +1,4 @@
-# ChatChannels configuration
+﻿# ChattyChannels configuration
 # Main plugin settings are in channels.yml
 
 # Active language. ISO-639-1 two-letter code (lowercase).
@@ -18,7 +18,7 @@ mysql:
   password: ""
   pool-size: 5
 
-# Chat logging. Writes a daily-rotated log to plugins/ChatChannels/logs/chat-YYYY-MM-DD.log
+# Chat logging. Writes a daily-rotated log to plugins/ChattyChannels/logs/chat-YYYY-MM-DD.log
 logging:
   enabled: true
 
