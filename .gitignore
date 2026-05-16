@@ -4,3 +4,6 @@ target/
 *.iml
 .vscode/
 dependency-reduced-pom.xml
+
+# Local dev test scripts
+run_test*.ps1
