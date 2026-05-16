@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.command;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import com.ttsstudio.sdk.PluginIdentity;
 import com.ttsstudio.sdk.chat.ChatPrefix;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -15,10 +15,10 @@ import java.util.UUID;
 public class IgnoreCommand implements CommandExecutor {
 
     private static final MiniMessage MM = MiniMessage.miniMessage();
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
     private final PluginIdentity identity;
 
-    public IgnoreCommand(ChatChannelsPlugin plugin) {
+    public IgnoreCommand(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
         this.identity = PluginIdentity.of(plugin);
     }

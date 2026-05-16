@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.manager;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -13,9 +13,9 @@ public class MuteManager {
 
     // key: "uuid:channelId"  or  "uuid:*" for all channels
     private final ConcurrentHashMap<String, Long> mutes = new ConcurrentHashMap<>();
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
 
-    public MuteManager(ChatChannelsPlugin plugin) {
+    public MuteManager(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
     }
 

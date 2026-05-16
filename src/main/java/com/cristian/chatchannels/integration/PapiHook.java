@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.integration;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -8,9 +8,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class PapiHook extends PlaceholderExpansion {
 
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
 
-    public PapiHook(ChatChannelsPlugin plugin) {
+    public PapiHook(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
     }
 

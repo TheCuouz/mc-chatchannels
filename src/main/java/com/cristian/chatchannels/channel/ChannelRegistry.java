@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.channel;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,12 +10,12 @@ import java.util.*;
 
 public class ChannelRegistry {
 
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
     private final Map<String, Channel> byId = new LinkedHashMap<>();
     private final Map<String, Channel> byPrefix = new HashMap<>();
     private String defaultChannelId;
 
-    public ChannelRegistry(ChatChannelsPlugin plugin) {
+    public ChannelRegistry(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
     }
 

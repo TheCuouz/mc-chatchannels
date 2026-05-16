@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.manager;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -10,12 +10,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerChannelManager {
 
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
     private final ConcurrentHashMap<UUID, String> activeChannel = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<UUID, Long> lastMessageTime = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<UUID, Boolean> spying = new ConcurrentHashMap<>();
 
-    public PlayerChannelManager(ChatChannelsPlugin plugin) {
+    public PlayerChannelManager(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
     }
 

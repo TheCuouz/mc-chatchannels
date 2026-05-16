@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.command;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import com.cristian.chatchannels.friends.FriendManager;
 import com.cristian.chatchannels.friends.FriendRequest;
 import com.ttsstudio.sdk.PluginIdentity;
@@ -22,10 +22,10 @@ public class FriendCommand implements CommandExecutor {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private static final int PAGE_SIZE = 10;
 
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
     private final PluginIdentity identity;
 
-    public FriendCommand(ChatChannelsPlugin plugin) {
+    public FriendCommand(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
         this.identity = PluginIdentity.of(plugin);
     }

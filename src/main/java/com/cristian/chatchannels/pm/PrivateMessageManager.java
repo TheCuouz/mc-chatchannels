@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.pm;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import com.ttsstudio.sdk.PluginIdentity;
 import com.ttsstudio.sdk.chat.ChatPrefix;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -15,14 +15,14 @@ public final class PrivateMessageManager {
 
     private static final MiniMessage MM = MiniMessage.miniMessage();
 
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
     private final PluginIdentity identity;
     private final IgnoreManager ignoreManager;
 
     /** uuid → uuid of the last player who messaged them (for /reply) */
     private final Map<UUID, UUID> lastMessaged = new ConcurrentHashMap<>();
 
-    public PrivateMessageManager(ChatChannelsPlugin plugin,
+    public PrivateMessageManager(ChattyChannelsPlugin plugin,
                                   IgnoreManager ignoreManager,
                                   ChatLogWriter logWriter) {
         this.plugin = plugin;

@@ -26,9 +26,9 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
-public final class ChatChannelsPlugin extends JavaPlugin {
+public final class ChattyChannelsPlugin extends JavaPlugin {
 
-    private static ChatChannelsPlugin instance;
+    private static ChattyChannelsPlugin instance;
 
     // ── Existing managers ─────────────────────────────────────────────────────
     private ConfigManager configManager;
@@ -194,7 +194,7 @@ public final class ChatChannelsPlugin extends JavaPlugin {
         if (cmd != null) cmd.setExecutor(exec);
     }
 
-    public static ChatChannelsPlugin getInstance()                { return instance; }
+    public static ChattyChannelsPlugin getInstance()                { return instance; }
     public ConfigManager getConfigManager()                       { return configManager; }
     public MessageManager getMessages()                           { return messageManager; }
     public MessageManager getMessagesConfig()                     { return messageManager; }

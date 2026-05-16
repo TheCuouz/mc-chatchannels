@@ -1,6 +1,6 @@
 package com.cristian.chatchannels.listener;
 
-import com.cristian.chatchannels.ChatChannelsPlugin;
+import com.cristian.chatchannels.ChattyChannelsPlugin;
 import com.cristian.chatchannels.channel.Channel;
 import com.ttsstudio.sdk.PluginIdentity;
 import com.ttsstudio.sdk.chat.ChatPrefix;
@@ -22,10 +22,10 @@ public class ChatListener implements Listener {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private static final PlainTextComponentSerializer PLAIN = PlainTextComponentSerializer.plainText();
 
-    private final ChatChannelsPlugin plugin;
+    private final ChattyChannelsPlugin plugin;
     private final PluginIdentity identity;
 
-    public ChatListener(ChatChannelsPlugin plugin) {
+    public ChatListener(ChattyChannelsPlugin plugin) {
         this.plugin = plugin;
         this.identity = PluginIdentity.of(plugin);
     }
