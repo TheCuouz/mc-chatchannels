@@ -40,7 +40,7 @@
 
 ```bash
 # 1. Coloca el jar en tu carpeta de plugins
-cp chatchannels-1.1.0.jar plugins/
+cp chatchannels-1.2.2.jar plugins/
 
 # 2. Reinicia el servidor
 #    Los canales por defecto (global, local, trade, staff) se generan al primer arranque.
@@ -143,6 +143,14 @@ channels:
     permission: "chatchannels.use.local"
     cooldown-seconds: 0
 
+  trade:
+    display-name: "<aqua>Trade"
+    quick-prefix: "#"
+    format: "<gray>[<aqua>$</aqua>]</gray> <player>: <message>"
+    range: -1
+    permission: "chatchannels.use.trade"
+    cooldown-seconds: 3
+
   staff:
     display-name: "<red>Staff</red>"
     quick-prefix: "@"
@@ -167,13 +175,15 @@ filters:
 
 ### Persistencia
 
-| Archivo | Qué almacena |
-|---------|--------------|
-| `players.yml` | Canal activo de cada jugador + tiempo del último mensaje + estado spy |
-| `mutes.yml` | Silencias aplicados por admin (`uuid:channelId` → expiración epoch ms) |
-| `hidden_channels.yml` | Canales ocultados por cada jugador |
+| Archivo | Qué almacena | Cuándo se escribe |
+|---------|--------------|-------------------|
+| `data.yml` | Canal activo de cada jugador | En `onDisable` |
+| `mutes.yml` | Silencios aplicados por admin (`uuid:channelId` → expiración epoch ms) | En cada cambio + `onDisable` |
+| `hidden_channels.yml` | Canales ocultados por cada jugador | En cada cambio + `onDisable` |
 
-Los tres se escriben en cada mutación y de nuevo en `onDisable` como vaciado de seguridad.
+`mutes.yml` y `hidden_channels.yml` se vuelcan al instante en cada cambio; el canal activo de `data.yml` se vuelca al apagar el servidor.
+
+> Nota: el tiempo del último mensaje (cooldowns) y el estado spy se mantienen en memoria solo durante la sesión y se reinician al reiniciar.
 
 ---
 

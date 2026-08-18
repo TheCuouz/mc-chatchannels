@@ -25,7 +25,7 @@ public class MuteCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
         if (!sender.hasPermission("chatchannels.mute")) {
-            ChatPrefix.error(sender, identity, "No tienes permiso.");
+            ChatPrefix.error(sender, identity, plugin.getMessages().get("no-permission"));
             return true;
         }
         if (args.length < 1) {
@@ -51,7 +51,7 @@ public class MuteCommand implements CommandExecutor {
         if (durationStr != null) {
             long millis = DurationParser.parseMillis(durationStr);
             if (millis < 0) {
-                ChatPrefix.error(sender, identity, "Duración inválida. Usa: 10m, 1h, 2d");
+                ChatPrefix.error(sender, identity, plugin.getMessages().get("mute-invalid-duration"));
                 return true;
             }
             expiresAt = System.currentTimeMillis() + millis;

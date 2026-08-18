@@ -2,10 +2,14 @@
 # Todos los strings son MiniMessage. El prefijo de chat lo añade el SDK
 # automáticamente — no hace falta <prefix> aquí.
 
+no-permission: "<red>No tienes permiso para usar esto."
+only-players: "<red>Solo los jugadores pueden usar este comando."
+
 channel-switched: "<green>Cambiaste al canal <channel>."
 channel-not-found: "<red>Canal desconocido: {channel}"
 channel-no-permission: "<red>No tienes permiso para usar ese canal."
 channel-list-header: "<gold>Canales disponibles:"
+channel-list-no-prefix: "sin prefijo"
 channel-list-entry: "  <gray>- <channel> <dark_gray>(<prefix>)"
 channel-cooldown: "<red>Espera <seconds>s antes de enviar otro mensaje."
 channel-muted: "<red>Estás silenciado en ese canal."
@@ -14,10 +18,14 @@ mute-applied: "<green><target> silenciado en <channel> por <duration>."
 mute-permanent: "<green><target> silenciado en <channel> permanentemente."
 mute-not-found: "<red>Jugador '<target>' no encontrado."
 mute-usage: "<red>Uso: /mute <jugador> [canal] [duración: 10m, 1h, 2d]"
+mute-invalid-duration: "<red>Duración inválida. Usa: 10m, 1h, 2d"
 
 spy-enabled: "<gold>Modo espía <green>activado</green>."
 spy-disabled: "<gold>Modo espía <red>desactivado</red>."
 spy-prefix: "<dark_gray>[SPY] "
+
+clearchat-broadcast: "<gold>Chat limpiado por <yellow><sender></yellow>."
+clearchat-confirm: "<green>Chat limpiado."
 
 reload-success: "<green>ChattyChannels recargado correctamente."
 

@@ -177,10 +177,11 @@ public final class ChattyChannelsPlugin extends JavaPlugin {
             var handler = new com.cristian.chatchannels.command.ChannelCommand(this);
             channelCmd.setExecutor(handler); channelCmd.setTabCompleter(handler);
         }
-        setExecutor("channels", new com.cristian.chatchannels.command.ChannelsCommand(this));
-        setExecutor("mute",     new com.cristian.chatchannels.command.MuteCommand(this));
-        setExecutor("chatspy",  new com.cristian.chatchannels.command.ChatSpyCommand(this));
-        setExecutor("cc",       new com.cristian.chatchannels.command.ChatChannelsRootCommand(this));
+        setExecutor("channels",  new com.cristian.chatchannels.command.ChannelsCommand(this));
+        setExecutor("mute",      new com.cristian.chatchannels.command.MuteCommand(this));
+        setExecutor("chatspy",   new com.cristian.chatchannels.command.ChatSpyCommand(this));
+        setExecutor("clearchat", new com.cristian.chatchannels.command.ClearChatCommand(this));
+        setExecutor("cc",        new com.cristian.chatchannels.command.ChatChannelsRootCommand(this));
 
         setExecutor("msg",    new com.cristian.chatchannels.command.MsgCommand(this));
         setExecutor("reply",  new com.cristian.chatchannels.command.ReplyCommand(this));

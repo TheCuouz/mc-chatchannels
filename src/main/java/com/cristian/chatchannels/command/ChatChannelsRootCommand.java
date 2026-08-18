@@ -47,7 +47,7 @@ public class ChatChannelsRootCommand implements CommandExecutor {
 
     private boolean handleReload(CommandSender sender) {
         if (!sender.hasPermission("chatchannels.admin")) {
-            ChatPrefix.error(sender, identity, "No tienes permiso.");
+            ChatPrefix.error(sender, identity, plugin.getMessages().get("no-permission"));
             return true;
         }
         plugin.reload();
@@ -63,7 +63,7 @@ public class ChatChannelsRootCommand implements CommandExecutor {
             return true;
         }
         if (!player.hasPermission("chatchannels.hide")) {
-            ChatPrefix.error(sender, identity, "No tienes permiso.");
+            ChatPrefix.error(sender, identity, plugin.getMessages().get("no-permission"));
             return true;
         }
         if (args.length < 2) {
@@ -96,7 +96,7 @@ public class ChatChannelsRootCommand implements CommandExecutor {
             return true;
         }
         if (!player.hasPermission("chatchannels.hide")) {
-            ChatPrefix.error(sender, identity, "No tienes permiso.");
+            ChatPrefix.error(sender, identity, plugin.getMessages().get("no-permission"));
             return true;
         }
         if (args.length < 2) {
@@ -129,7 +129,7 @@ public class ChatChannelsRootCommand implements CommandExecutor {
             return true;
         }
         if (!player.hasPermission("chatchannels.hide")) {
-            ChatPrefix.error(sender, identity, "No tienes permiso.");
+            ChatPrefix.error(sender, identity, plugin.getMessages().get("no-permission"));
             return true;
         }
 

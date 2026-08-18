@@ -38,7 +38,7 @@ public class FriendCommand implements CommandExecutor {
             return true;
         }
         if (!player.hasPermission("chatchannels.friends")) {
-            ChatPrefix.error(player, identity, "No tienes permiso.");
+            ChatPrefix.error(player, identity, plugin.getMessages().get("no-permission"));
             return true;
         }
         if (args.length == 0) {

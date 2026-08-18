@@ -2,10 +2,14 @@
 # All strings are MiniMessage. The chat prefix is prepended by the SDK
 # automatically — no <prefix> needed here.
 
+no-permission: "<red>You don't have permission to use this."
+only-players: "<red>Only players can use this command."
+
 channel-switched: "<green>You switched to channel <channel>."
 channel-not-found: "<red>Unknown channel: {channel}"
 channel-no-permission: "<red>You don't have permission to use that channel."
 channel-list-header: "<gold>Available channels:"
+channel-list-no-prefix: "no prefix"
 channel-list-entry: "  <gray>- <channel> <dark_gray>(<prefix>)"
 channel-cooldown: "<red>Wait <seconds>s before sending another message."
 channel-muted: "<red>You are muted in that channel."
@@ -14,10 +18,14 @@ mute-applied: "<green><target> muted in <channel> for <duration>."
 mute-permanent: "<green><target> permanently muted in <channel>."
 mute-not-found: "<red>Player '<target>' not found."
 mute-usage: "<red>Usage: /mute <player> [channel] [duration: 10m, 1h, 2d]"
+mute-invalid-duration: "<red>Invalid duration. Use: 10m, 1h, 2d"
 
 spy-enabled: "<gold>Spy mode <green>enabled</green>."
 spy-disabled: "<gold>Spy mode <red>disabled</red>."
 spy-prefix: "<dark_gray>[SPY] "
+
+clearchat-broadcast: "<gold>Chat cleared by <yellow><sender></yellow>."
+clearchat-confirm: "<green>Chat cleared."
 
 reload-success: "<green>ChattyChannels reloaded successfully."
 
