@@ -40,7 +40,7 @@
 
 ```bash
 # 1. Drop the jar into your plugins folder
-cp chatchannels-1.1.0.jar plugins/
+cp chatchannels-1.2.2.jar plugins/
 
 # 2. Restart the server
 #    Default channels (global, local, trade, staff) are written on first enable.
@@ -143,6 +143,14 @@ channels:
     permission: "chatchannels.use.local"
     cooldown-seconds: 0
 
+  trade:
+    display-name: "<aqua>Trade"
+    quick-prefix: "#"
+    format: "<gray>[<aqua>$</aqua>]</gray> <player>: <message>"
+    range: -1
+    permission: "chatchannels.use.trade"
+    cooldown-seconds: 3
+
   staff:
     display-name: "<red>Staff</red>"
     quick-prefix: "@"
@@ -167,13 +175,15 @@ filters:
 
 ### Persistence
 
-| File | What's stored |
-|------|---------------|
-| `players.yml` | Each player's active channel + last-message-time + spy state |
-| `mutes.yml` | Admin-applied mutes (`uuid:channelId` → expiry epoch ms) |
-| `hidden_channels.yml` | Per-player self-hidden channels |
+| File | What's stored | When it's written |
+|------|---------------|-------------------|
+| `data.yml` | Each player's active channel | On `onDisable` |
+| `mutes.yml` | Admin-applied mutes (`uuid:channelId` → expiry epoch ms) | On mutation + `onDisable` |
+| `hidden_channels.yml` | Per-player self-hidden channels | On mutation + `onDisable` |
 
-All three are written on mutation and again on `onDisable` as a belt-and-braces flush.
+`mutes.yml` and `hidden_channels.yml` are flushed immediately on every change; the active channel in `data.yml` is flushed on server shutdown.
+
+> Note: last-message-time (cooldowns) and spy state are kept in memory for the session only and reset on restart.
 
 ---
 

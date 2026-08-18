@@ -33,7 +33,11 @@ public class ChannelsCommand implements CommandExecutor {
 
         for (Channel ch : plugin.getChannelRegistry().getAll()) {
             if (sender instanceof Player player && !player.hasPermission(ch.permission())) continue;
-            String prefix = ch.quickPrefix().isEmpty() ? "sin prefijo" : ch.quickPrefix();
+            // The "no prefix" label lives in lang/*.yml — it used to be a hardcoded Spanish
+            // string that leaked into English servers running /channels.
+            String noPrefix = plugin.getMessagesConfig()
+                .getString("channel-list-no-prefix", "no prefix");
+            String prefix = ch.quickPrefix().isEmpty() ? noPrefix : ch.quickPrefix();
             ChatPrefix.send(sender, identity,
                 entryTemplate
                     .replace("<channel>", ch.displayName())

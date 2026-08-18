@@ -41,7 +41,15 @@ public final class CrossServerMessenger implements PluginMessageListener {
             player.getUniqueId().toString(), player.getName(),
             event, plugin.getConfigManager().serverName());
         Player carrier = plugin.getServer().getOnlinePlayers().stream().findFirst().orElse(null);
-        if (carrier != null) sendRaw(carrier, json);
+        if (carrier != null) {
+            sendRaw(carrier, json);
+        } else {
+            // Plugin messaging requires an online player to carry the packet to the proxy.
+            // With nobody online there is no carrier; drop it but log so it isn't silent.
+            plugin.getSLF4JLogger().debug(
+                "Cross-server friend-notify for {} ({}) dropped: no online player to carry the message.",
+                player.getName(), event);
+        }
     }
 
     private void sendRaw(Player carrier, String json) {

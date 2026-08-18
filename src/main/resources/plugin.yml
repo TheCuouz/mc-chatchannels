@@ -31,6 +31,11 @@ commands:
     description: Toggle chat spy mode
     usage: /chatspy
     permission: chatchannels.spy
+  clearchat:
+    description: Clear the visible chat for all players
+    usage: /clearchat
+    aliases: [cclear, cc-clear]
+    permission: chatchannels.clearchat
   cc:
     description: ChattyChannels admin and player commands
     usage: /cc <reload|hide #channel|show #channel|hidden>
@@ -83,6 +88,12 @@ permissions:
   chatchannels.bypass.filter:
     description: Bypass spam and word filters
     default: op
+  chatchannels.clearchat:
+    description: Clear the visible chat for all players
+    default: op
+  chatchannels.clearchat.bypass:
+    description: Keep chat history visible when /clearchat is run
+    default: false
   chatchannels.hide:
     description: Allow players to hide channels from their view
     default: true

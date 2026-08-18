@@ -31,7 +31,7 @@ public class IgnoreCommand implements CommandExecutor {
             return true;
         }
         if (!player.hasPermission("chatchannels.ignore")) {
-            ChatPrefix.error(player, identity, "No tienes permiso.");
+            ChatPrefix.error(player, identity, plugin.getMessages().get("no-permission"));
             return true;
         }
 

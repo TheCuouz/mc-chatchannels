@@ -3,6 +3,11 @@
 All notable changes to ChattyChannels are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.2.2] — 2026-05-18
+
+### Added
+- **`/clearchat`** — clears the visible chat for every online player. New permission `chatchannels.clearchat` (default `op`) gates the command; `chatchannels.clearchat.bypass` (default `false`) lets a player keep chat history visible across the broadcast. Aliases `/cclear` and `/cc-clear`. New message keys `clearchat-broadcast` and `clearchat-confirm` (es + en).
+
 ## [1.2.0] — 2026-05-15
 
 ### Added

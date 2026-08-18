@@ -168,6 +168,9 @@ public class ChatListener implements Listener {
             format = me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, format);
         }
 
+        // whatever PAPI could not resolve must not reach the player as raw %tokens%
+        format = com.cristian.chatchannels.chat.ChatFormat.stripUnresolved(format);
+
         format = format
             .replace("<player>", player.getName())
             .replace("<message>", escapeForMiniMessage(message));

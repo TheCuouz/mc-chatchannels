@@ -27,7 +27,7 @@ public class ChatSpyCommand implements CommandExecutor {
             return true;
         }
         if (!player.hasPermission("chatchannels.spy")) {
-            ChatPrefix.error(player, identity, "No tienes permiso.");
+            ChatPrefix.error(player, identity, plugin.getMessages().get("no-permission"));
             return true;
         }
         plugin.getPlayerChannelManager().toggleSpy(player.getUniqueId());
