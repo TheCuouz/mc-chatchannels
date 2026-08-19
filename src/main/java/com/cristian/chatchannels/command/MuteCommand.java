@@ -31,7 +31,7 @@ public class MuteCommand implements CommandExecutor {
         if (args.length < 1) {
             ChatPrefix.send(sender, identity,
                 plugin.getMessagesConfig().getString("mute-usage",
-                    "<red>Uso: /mute <jugador> [canal] [duración: 10m, 1h, 2d]"));
+                    "<red>Usage: /mute <player> [channel] [duration: 10m, 1h, 2d]"));
             return true;
         }
 
@@ -39,7 +39,7 @@ public class MuteCommand implements CommandExecutor {
         if (target == null) {
             ChatPrefix.send(sender, identity,
                 plugin.getMessagesConfig().getString("mute-not-found",
-                    "<red>Jugador '<target>' no encontrado.")
+                    "<red>Player '<target>' not found.")
                     .replace("<target>", args[0]));
             return true;
         }
@@ -63,11 +63,11 @@ public class MuteCommand implements CommandExecutor {
         final long finalExpiresAt = expiresAt;
         String durationDisplay = finalExpiresAt < 0
             ? ""
-            : " por " + DurationParser.format(finalExpiresAt - System.currentTimeMillis());
+            : " for " + DurationParser.format(finalExpiresAt - System.currentTimeMillis());
 
         String msgKey = finalExpiresAt < 0 ? "mute-permanent" : "mute-applied";
         String msg = plugin.getMessagesConfig().getString(msgKey,
-            "<green><target> silenciado en <channel>.")
+            "<green><target> muted in <channel>.")
             .replace("<target>", target.getName())
             .replace("<channel>", channelDisplay)
             .replace("<duration>", durationDisplay);

@@ -62,7 +62,7 @@ public class FriendCommand implements CommandExecutor {
 
     private void handleAdd(Player player, FriendManager fm, String[] args) {
         if (args.length < 2) {
-            ChatPrefix.send(player, identity, "<red>Uso: /friend add <jugador>"); return;
+            ChatPrefix.send(player, identity, "<red>Usage: /friend add <player>"); return;
         }
         String targetName = args[1];
         if (targetName.equalsIgnoreCase(player.getName())) {
@@ -99,7 +99,7 @@ public class FriendCommand implements CommandExecutor {
 
     private void handleAccept(Player player, FriendManager fm, String[] args) {
         if (args.length < 2) {
-            ChatPrefix.send(player, identity, "<red>Uso: /friend accept <jugador>"); return;
+            ChatPrefix.send(player, identity, "<red>Usage: /friend accept <player>"); return;
         }
         String senderName = args[1];
         var offline = Bukkit.getOfflinePlayerIfCached(senderName);
@@ -121,7 +121,7 @@ public class FriendCommand implements CommandExecutor {
 
     private void handleDeny(Player player, FriendManager fm, String[] args) {
         if (args.length < 2) {
-            ChatPrefix.send(player, identity, "<red>Uso: /friend deny <jugador>"); return;
+            ChatPrefix.send(player, identity, "<red>Usage: /friend deny <player>"); return;
         }
         String senderName = args[1];
         var offline = Bukkit.getOfflinePlayerIfCached(senderName);
@@ -139,7 +139,7 @@ public class FriendCommand implements CommandExecutor {
 
     private void handleRemove(Player player, FriendManager fm, String[] args) {
         if (args.length < 2) {
-            ChatPrefix.send(player, identity, "<red>Uso: /friend remove <jugador>"); return;
+            ChatPrefix.send(player, identity, "<red>Usage: /friend remove <player>"); return;
         }
         String targetName = args[1];
         var offline = Bukkit.getOfflinePlayerIfCached(targetName);
@@ -166,7 +166,7 @@ public class FriendCommand implements CommandExecutor {
         int end = Math.min(start + PAGE_SIZE, total);
 
         player.sendMessage(MM.deserialize(
-            "<gray>── Tus amigos (" + total + "/" + maxFriends + ") ───────────────────"));
+            "<gray>── Your friends (" + total + "/" + maxFriends + ") ───────────────────"));
         if (total == 0) {
             player.sendMessage(MM.deserialize(plugin.getMessages().get("friend-list-empty")));
         } else {
@@ -178,7 +178,7 @@ public class FriendCommand implements CommandExecutor {
                     : (offlineName != null ? offlineName : fUuid.toString());
                 if (online != null) {
                     Component nameComp = Component.text("  ● " + fName, NamedTextColor.GREEN)
-                        .hoverEvent(HoverEvent.showText(Component.text("Click para enviar PM")));
+                        .hoverEvent(HoverEvent.showText(Component.text("Click to send a PM")));
                     Component pmBtn = Component.text(" [→ PM]", NamedTextColor.GOLD)
                         .clickEvent(ClickEvent.suggestCommand("/msg " + fName + " "))
                         .hoverEvent(HoverEvent.showText(Component.text("Enviar mensaje privado")));
@@ -190,7 +190,7 @@ public class FriendCommand implements CommandExecutor {
             }
         }
         player.sendMessage(MM.deserialize(
-            "<gray>  Página " + page + "/" + totalPages +
+            "<gray>  Page " + page + "/" + totalPages +
             (totalPages > page
                 ? "  •  <click:run_command:'/friend list " + (page + 1) + "'><yellow>/friend list "
                   + (page + 1) + "</yellow></click>"
@@ -203,7 +203,7 @@ public class FriendCommand implements CommandExecutor {
             ChatPrefix.send(player, identity, plugin.getMessages().get("friend-requests-empty"));
             return;
         }
-        player.sendMessage(MM.deserialize("<gold>Solicitudes pendientes (" + requests.size() + "):"));
+        player.sendMessage(MM.deserialize("<gold>Pending requests (" + requests.size() + "):"));
         for (FriendRequest req : requests) {
             deliverRequest(player, req.senderName());
         }
@@ -220,12 +220,12 @@ public class FriendCommand implements CommandExecutor {
     public void deliverRequest(Player receiver, String senderName) {
         receiver.sendMessage(MM.deserialize(
             plugin.getMessages().get("friend-request-received", "player", senderName)));
-        Component accept = Component.text("  [✔ Aceptar]", NamedTextColor.GREEN)
+        Component accept = Component.text("  [✔ Accept]", NamedTextColor.GREEN)
             .clickEvent(ClickEvent.runCommand("/friend accept " + senderName))
-            .hoverEvent(HoverEvent.showText(Component.text("Aceptar solicitud de " + senderName)));
-        Component deny = Component.text("   [✘ Rechazar]", NamedTextColor.RED)
+            .hoverEvent(HoverEvent.showText(Component.text("Accept request from " + senderName)));
+        Component deny = Component.text("   [✘ Deny]", NamedTextColor.RED)
             .clickEvent(ClickEvent.runCommand("/friend deny " + senderName))
-            .hoverEvent(HoverEvent.showText(Component.text("Rechazar solicitud de " + senderName)));
+            .hoverEvent(HoverEvent.showText(Component.text("Deny request from " + senderName)));
         receiver.sendMessage(accept.append(deny));
     }
 

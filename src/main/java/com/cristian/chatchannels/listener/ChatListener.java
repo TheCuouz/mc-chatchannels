@@ -60,7 +60,7 @@ public class ChatListener implements Listener {
         if (!player.hasPermission(targetChannel.permission())) {
             ChatPrefix.send(player, identity,
                 plugin.getMessagesConfig().getString("channel-no-permission",
-                    "<red>No tienes permiso para usar ese canal."));
+                    "<red>You don't have permission to use that channel."));
             event.setCancelled(true);
             return;
         }
@@ -69,7 +69,7 @@ public class ChatListener implements Listener {
         if (plugin.getMuteManager().isMuted(uuid, targetChannel.id())) {
             ChatPrefix.send(player, identity,
                 plugin.getMessagesConfig().getString("channel-muted",
-                    "<red>Estás silenciado en ese canal."));
+                    "<red>You are muted in that channel."));
             event.setCancelled(true);
             return;
         }

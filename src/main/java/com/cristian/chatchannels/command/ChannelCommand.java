@@ -34,7 +34,7 @@ public class ChannelCommand implements CommandExecutor, TabCompleter {
         if (args.length == 0) {
             String current = plugin.getPlayerChannelManager().getActiveChannel(player.getUniqueId());
             plugin.getChannelRegistry().getById(current).ifPresent(ch ->
-                ChatPrefix.send(player, identity, "<gold>Canal activo: " + ch.displayName()));
+                ChatPrefix.send(player, identity, "<gold>Active channel: " + ch.displayName()));
             return true;
         }
         String id = args[0].toLowerCase();
@@ -42,7 +42,7 @@ public class ChannelCommand implements CommandExecutor, TabCompleter {
         if (optChannel.isEmpty()) {
             ChatPrefix.send(player, identity,
                 plugin.getMessagesConfig().getString("channel-not-found",
-                    "<red>Canal desconocido: {channel}</red>")
+                    "<red>Unknown channel: {channel}</red>")
                     .replace("{channel}", id)
                     .replace("<id>", id));
             return true;
@@ -51,13 +51,13 @@ public class ChannelCommand implements CommandExecutor, TabCompleter {
         if (!player.hasPermission(channel.permission())) {
             ChatPrefix.send(player, identity,
                 plugin.getMessagesConfig().getString("channel-no-permission",
-                    "<red>No tienes permiso para usar ese canal."));
+                    "<red>You don't have permission to use that channel."));
             return true;
         }
         plugin.getPlayerChannelManager().setActiveChannel(player.getUniqueId(), id);
         ChatPrefix.send(player, identity,
             plugin.getMessagesConfig().getString("channel-switched",
-                "<green>Cambiaste al canal <channel>.")
+                "<green>Switched to channel <channel>.")
                 .replace("<channel>", channel.displayName()));
         return true;
     }
