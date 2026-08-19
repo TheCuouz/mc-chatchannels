@@ -3,7 +3,7 @@
 
 # Active language. ISO-639-1 two-letter code (lowercase).
 # Bundled out of the box: es (Spanish), en (English).
-language: es
+language: en
 
 # Unique name for this server instance. Shown in /friend list when MySQL is active.
 server-name: "survival"

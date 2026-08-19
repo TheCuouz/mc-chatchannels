@@ -36,7 +36,7 @@ public class ClearChatCommand implements CommandExecutor {
         String senderName = (sender instanceof Player p) ? p.getName() : "Consola";
         Component blank = Component.empty();
         String announceTpl = plugin.getMessagesConfig().getString("clearchat-broadcast",
-            "<gold>Chat limpiado por <yellow><sender></yellow>.")
+            "<gold>Chat cleared by <yellow><sender></yellow>.")
             .replace("<sender>", senderName);
         Component announce = MiniMessage.miniMessage().deserialize(announceTpl);
 

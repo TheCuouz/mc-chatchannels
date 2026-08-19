@@ -59,7 +59,7 @@ public class ChatChannelsRootCommand implements CommandExecutor {
 
     private boolean handleHide(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
-            ChatPrefix.error(sender, identity, "Solo jugadores pueden ocultar canales.");
+            ChatPrefix.error(sender, identity, "Only players can hide channels.");
             return true;
         }
         if (!player.hasPermission("chatchannels.hide")) {
@@ -67,14 +67,14 @@ public class ChatChannelsRootCommand implements CommandExecutor {
             return true;
         }
         if (args.length < 2) {
-            ChatPrefix.warn(sender, identity, "Uso: /cc hide <#canal>");
+            ChatPrefix.warn(sender, identity, "Usage: /cc hide <#channel>");
             return true;
         }
 
         Optional<Channel> opt = resolveChannel(args[1]);
         if (opt.isEmpty()) {
             sendFormatted(sender, "channel-not-found",
-                "<red>Canal desconocido: {channel}</red>",
+                "<red>Unknown channel: {channel}</red>",
                 "{channel}", args[1]);
             return true;
         }
@@ -84,15 +84,15 @@ public class ChatChannelsRootCommand implements CommandExecutor {
         boolean added = plugin.getHiddenChannelsManager().hide(uuid, channel.id());
         String key = added ? "channel-hidden" : "channel-already-hidden";
         String fallback = added
-            ? "<green>Canal {channel} oculto. No recibirás sus mensajes.</green>"
-            : "<yellow>Ese canal ya estaba oculto.</yellow>";
+            ? "<green>Channel {channel} hidden. You will no longer receive its messages.</green>"
+            : "<yellow>That channel was already hidden.</yellow>";
         sendFormatted(sender, key, fallback, "{channel}", channel.displayName());
         return true;
     }
 
     private boolean handleShow(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
-            ChatPrefix.error(sender, identity, "Solo jugadores pueden mostrar canales.");
+            ChatPrefix.error(sender, identity, "Only players can show channels.");
             return true;
         }
         if (!player.hasPermission("chatchannels.hide")) {
@@ -100,14 +100,14 @@ public class ChatChannelsRootCommand implements CommandExecutor {
             return true;
         }
         if (args.length < 2) {
-            ChatPrefix.warn(sender, identity, "Uso: /cc show <#canal>");
+            ChatPrefix.warn(sender, identity, "Usage: /cc show <#channel>");
             return true;
         }
 
         Optional<Channel> opt = resolveChannel(args[1]);
         if (opt.isEmpty()) {
             sendFormatted(sender, "channel-not-found",
-                "<red>Canal desconocido: {channel}</red>",
+                "<red>Unknown channel: {channel}</red>",
                 "{channel}", args[1]);
             return true;
         }
@@ -117,15 +117,15 @@ public class ChatChannelsRootCommand implements CommandExecutor {
         boolean removed = plugin.getHiddenChannelsManager().show(uuid, channel.id());
         String key = removed ? "channel-shown" : "channel-not-hidden";
         String fallback = removed
-            ? "<green>Canal {channel} visible de nuevo.</green>"
-            : "<yellow>Ese canal no estaba oculto.</yellow>";
+            ? "<green>Channel {channel} is visible again.</green>"
+            : "<yellow>That channel was not hidden.</yellow>";
         sendFormatted(sender, key, fallback, "{channel}", channel.displayName());
         return true;
     }
 
     private boolean handleHidden(CommandSender sender) {
         if (!(sender instanceof Player player)) {
-            ChatPrefix.error(sender, identity, "Solo jugadores tienen lista de canales ocultos.");
+            ChatPrefix.error(sender, identity, "Only players have a hidden-channel list.");
             return true;
         }
         if (!player.hasPermission("chatchannels.hide")) {
@@ -166,7 +166,7 @@ public class ChatChannelsRootCommand implements CommandExecutor {
     }
 
     private void sendUsage(CommandSender sender) {
-        ChatPrefix.warn(sender, identity, "Uso: /cc <reload|hide|show|hidden>");
+        ChatPrefix.warn(sender, identity, "Usage: /cc <reload|hide|show|hidden>");
     }
 
     private void sendFormatted(CommandSender sender, String key, String fallback,
