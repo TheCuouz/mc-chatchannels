@@ -3,6 +3,13 @@
 All notable changes to ChattyChannels are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.2.3] — 2026-08-26
+
+### Changed
+- **Default interface language is English** (`language: en`). The build published on BuiltByBit
+  was still shipping the Spanish default; the store download now matches the listing.
+
+
 ## [1.2.2] — 2026-05-18
 
 ### Added
